@@ -1,7 +1,25 @@
+import 'dart:io';
+
+import 'package:balghny/model/post.dart';
+import 'package:balghny/view/screen/community_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Add_post extends StatelessWidget {
-  const Add_post({Key? key}) : super(key: key);
+class Add_post extends StatefulWidget {
+
+
+  final File img;
+  const Add_post({Key? key,required this.img}) : super(key: key);
+
+  @override
+  State<Add_post> createState() => _Add_postState();
+}
+
+class _Add_postState extends State<Add_post> {
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +30,8 @@ class Add_post extends StatelessWidget {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios)),
-        title: Center(child: Text('Create New Post')),
+        title: Text('Create New Post'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -23,11 +42,11 @@ class Add_post extends StatelessWidget {
                 child: Stack(
                   children: [
 
-                    Center(child:
-                    Image.asset("assets/images/my.jpg",width: 150,
-                      height: 150,
-                      fit:BoxFit.fill,),)
-                    
+                    Center(child: Image.file(widget.img,width: 200, height: 200, fit:BoxFit.fill),
+
+                 //       Image.asset("assets/images/my.jpg",width: 150, height: 150, fit:BoxFit.fill,)
+                    )
+
                    /* Container(
                         margin: EdgeInsets.only(left: 45,top: 70),
                         child: IconButton(onPressed: (){},
@@ -46,13 +65,12 @@ class Add_post extends StatelessWidget {
                     children: [
                        Container(
                            margin: EdgeInsets.only(left: 20),
-                           child: Text("Title")),
+                           child: Text("Title",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                   SizedBox(height: 5),
                   SizedBox(width: 350,
-                    child: TextFormField(
-                        decoration: InputDecoration(border: OutlineInputBorder())),
+                    child:  Text("Fire-Disaster",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -63,13 +81,19 @@ class Add_post extends StatelessWidget {
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: 20),
-                          child: Text("Description")),
+                          child: Text("Description",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
                     ],
                   ),
                   SizedBox(height: 5),
-                  SizedBox(width: 350,
+                  SizedBox(
+                    width: 350,height: 100,
                     child: TextFormField(
-                        decoration: InputDecoration(border: OutlineInputBorder())),
+
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 60),
+                            border: OutlineInputBorder()),
+
+                    ),
                   ),
                 ],
               ),
@@ -79,7 +103,8 @@ class Add_post extends StatelessWidget {
                 child: SizedBox(
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                       },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.green),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

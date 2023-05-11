@@ -1,8 +1,10 @@
 import 'package:balghny/view/screen/login_screen.dart';
 import 'package:balghny/view/screen/profile.dart';
 import 'package:balghny/view/widget/defaultBtn.dart';
+import 'package:balghny/view/widget/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:balghny/model/user_notification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -379,7 +381,8 @@ class _HomePageState extends State<HomePage> {
                children: [
                Expanded(
                  child: InkWell(
-                   onTap: ()=> Navigator.of(context).pushNamed("cam"),
+                  // onTap: ()=> Navigator.of(context).pushNamed("Cam_Fire"),
+                   onTap: ()=> Navigator.of(context).pushNamed("Cam_Fire"),
                    child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
@@ -676,9 +679,9 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("scan");
+                  Navigator.of(context).pushNamed("Community");
                 },
-                icon: Icon(Icons.translate_outlined,
+                icon: Icon(Icons.groups_outlined,
                     color: currentTab == 2
                         ? Colors.green
                         : Colors.black),
@@ -688,7 +691,14 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("notification");
+                 // Navigator.of(context).pushNamed("noti");
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationWidget(notification:  null),
+                    ),
+                  );
                 },
                 icon: Icon(Icons.notifications_active,
                     color: currentTab == 4

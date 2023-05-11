@@ -1,36 +1,38 @@
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'dart:ui';
-import 'package:balghny/view/screen/add_post.dart';
-
+import 'package:balghny/view/screen/result.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
-
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
-
-class Cam_Fire extends StatefulWidget {
-  const Cam_Fire({Key? key}) : super(key: key);
+class Cam extends StatefulWidget {
+  const Cam({Key? key}) : super(key: key);
 
   @override
-  State<Cam_Fire> createState() => _Cam_FireState();
+  State<Cam> createState() => _CamState();
 }
 
-class _Cam_FireState extends State<Cam_Fire> {
+class _CamState extends State<Cam> {
 
-  //var myPhotoUrl = "";
+  var myPhotoUrl = "";
 
   String result = "";
-  File? _image1;
+  File? _image;
   var image;
- // String? _imagepath;
- // String i = "assets/images/my.jpg";
+  String? _imagepath;
+  String i = "assets/images/my.jpg";
   late ImagePicker imagePicker;
 
   //TODO declare detector
@@ -59,35 +61,35 @@ class _Cam_FireState extends State<Cam_Fire> {
 
   //final picker = ImagePicker();
 
-
-  //TODO capture image using camera
- // late File _image1;
-  final picker = ImagePicker();
-  Future<void> getImage1() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera
-    ,   maxWidth: 640,
-        maxHeight: 480,
-        imageQuality: 70 //0 - 100
-
-    );
-  /*  if (pickedFile?.path != null) {
-      setState(() {
-        _image1 = File(pickedFile!.path);
-        doObjectDetection();
-      });
-    }*/
+  Future<void> _pickImageAndUpload() async {
+    // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    var pickedFile = _image.toString();
     if (pickedFile != null) {
+      final storageRef = FirebaseStorage.instance.ref()
+          .child('profile_images')
+          .child(FirebaseAuth.instance.currentUser!.uid + '.jpg');
+
+      await storageRef.putFile(File(pickedFile as String));
+
+      final photoUrl = await storageRef.getDownloadURL();
       setState(() {
-        _image1 = File(pickedFile.path);
-        doObjectDetection();
+        myPhotoUrl = photoUrl;
       });
     }
-    else {
+  }
+  //TODO capture image using camera
+  late File _image1;
+  final picker = ImagePicker();
+  Future<void> getImage1() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image1 = File(pickedFile.path);
+      } else {
         print('No image selected.');
       }
-
-
-
+    });
   }
   /* void getImage({required ImageSource source}) async {
     XFile? file = await ImagePicker().pickImage(
@@ -137,7 +139,7 @@ class _Cam_FireState extends State<Cam_Fire> {
 
   doObjectDetection() async {
     result = "";
-    final InputImage inputImage = InputImage.fromFile(_image1!);
+    final InputImage inputImage = InputImage.fromFile(_image!);
     objects = await objectDetector.processImage(inputImage);
 
     drawRectanglesAroundObjects();
@@ -145,7 +147,7 @@ class _Cam_FireState extends State<Cam_Fire> {
 
   //TODO draw rectangles
   drawRectanglesAroundObjects() async {
-    image = await _image1?.readAsBytes();
+    image = await _image?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
       image;
@@ -161,153 +163,71 @@ class _Cam_FireState extends State<Cam_Fire> {
       appBar: AppBar(
         title: const Text('Image Picker'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            image != null
-                ? Container(
-                width: 640,
-                height: 480,
-                margin: const EdgeInsets.only(
-                  top: 45,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  image: DecorationImage(
-                      image: FileImage(_image1!), fit: BoxFit.cover),
-                  border: Border.all(width: 8, color: Colors.black),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Center(
-                  child: FittedBox(
-                    child: SizedBox(
-                      width: image.width.toDouble(),
-                      height: image.height.toDouble(),
-                      child: CustomPaint(
-                        painter: ObjectPainter(
-                            objectList: objects, imageFile: image),
-                      ),
-                    ),
+          children: <Widget>[
+            _image == null
+                ? const Text('No image selected.')
+                : Image.file(_image1),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Res(img: _image1),
                   ),
-                ))
-                : Expanded(
-              child: Container(
-                width: 640,
-                height: 480,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  border: Border.all(width: 8, color: Colors.black12),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: const Text(
-                  'Image should appear here',
-                  style: TextStyle(fontSize: 26),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        getImage1();
-                      },
-                      child: const Text('Capture Image',
-                          style: TextStyle(fontSize: 18))),
-                ),
-                SizedBox(width: 20,),
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if(result != "Fire-Disaster"){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!),
-                            ),
-                          );
-                        }
-                      else{
-                          AlertDialog alert = AlertDialog(
-                            title: Text("Fake Image"),
-                            content: Text("This Image Not Damage."),
-                            actions: [
-
-                            ],
-                          );
-
-                          // show the dialog
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
-                        }
-
-
-                      /*  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Add_post(img: _image1!),
-                          ),
-                        );*/
-                      },
-                      child: const Text('Send',
-                          style: TextStyle(fontSize: 18))),
-                ),
-
-              ],
+                );
+              },
+              child: const Text('Send Image to Second Class'),
             ),
           ],
         ),
       ),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: getImage1,
+        tooltip: 'Take a Photo',
+        child: const Icon(Icons.add_a_photo),
+      ),
     );
   }
 
-  /*_save() async {
+  _save() async {
     var response = await Dio()
-        .get(_image1!.path, options: Options(responseType: ResponseType.bytes));
+        .get(_image!.path, options: Options(responseType: ResponseType.bytes));
     final result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 80,
         name: "hello");
     print(result);
-  }*/
+  }
 
-  /*void pickimage() async {
+  void pickimage() async {
     XFile? pickedFile =
     await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      _image1 = File(pickedFile.path);
+      _image = File(pickedFile.path);
       doObjectDetection();
     }
-  }*/
+  }
 
- /* save2(path) async {
+  save2(path) async {
     SharedPreferences saveimage = await SharedPreferences.getInstance();
     saveimage.setString("imagepath", path);
-  }*/
+  }
 
-  /*Load() async {
+  Load() async {
     SharedPreferences saveimage = await SharedPreferences.getInstance();
     setState(() {
       _imagepath = saveimage.getString("imagepath");
     });
-  }*/
+  }
 
-  /*s() async {
+  s() async {
     var image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image == null) return;
     GallerySaver.saveImage(image.path);
-  }*/
+  }
 }
 
 class ObjectPainter extends CustomPainter {
