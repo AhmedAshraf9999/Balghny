@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'dart:ui';
 import 'package:balghny/view/screen/add_post.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class Cam_Fire extends StatefulWidget {
 class _Cam_FireState extends State<Cam_Fire> {
 
   //var myPhotoUrl = "";
-
+  var img_url;
   String result = "";
   File? _image1;
-  var image;
+  var image ;
  // String? _imagepath;
  // String i = "assets/images/my.jpg";
   late ImagePicker imagePicker;
@@ -45,6 +46,7 @@ class _Cam_FireState extends State<Cam_Fire> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
+    
     //TODO initialize detector
     createObjectDetection();
   }
@@ -70,6 +72,8 @@ class _Cam_FireState extends State<Cam_Fire> {
         imageQuality: 70 //0 - 100
 
     );
+
+    
   /*  if (pickedFile?.path != null) {
       setState(() {
         _image1 = File(pickedFile!.path);
@@ -77,6 +81,12 @@ class _Cam_FireState extends State<Cam_Fire> {
       });
     }*/
     if (pickedFile != null) {
+      var imagename = basename(pickedFile.path) ;
+       final storageRef = FirebaseStorage.instance.ref('images_cate')
+        .child('images_fires').child('$imagename');
+        await storageRef.putFile(File(pickedFile.path));
+        final photoUrl = await storageRef.getDownloadURL();
+        
       setState(() {
         _image1 = File(pickedFile.path);
         doObjectDetection();
@@ -89,6 +99,8 @@ class _Cam_FireState extends State<Cam_Fire> {
 
 
   }
+
+  
   /* void getImage({required ImageSource source}) async {
     XFile? file = await ImagePicker().pickImage(
           //file = await ImagePicker().pickImage(
@@ -108,7 +120,19 @@ class _Cam_FireState extends State<Cam_Fire> {
 
   //TODO face detection code here
 
-
+/*Future<String> uploadFile(File file) async {
+  try {
+    final fileName = basename(file.path);
+    
+    final ref = FirebaseStorage.instance.ref('imagescate').child('images_fires').child('path');
+    await ref.putFile(file);
+    final downloadURL = await ref.getDownloadURL();
+    return downloadURL;
+  } catch (e) {
+    print(e);
+    return'';
+}
+}*/
 
   Future<String> _getModel(String assetPath) async {
     if (Platform.isAndroid) {
@@ -180,7 +204,8 @@ class _Cam_FireState extends State<Cam_Fire> {
                   border: Border.all(width: 8, color: Colors.black),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: Center(
+                child: 
+                Center(
                   child: FittedBox(
                     child: SizedBox(
                       width: image.width.toDouble(),
@@ -217,6 +242,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                   child: ElevatedButton(
                       onPressed: () {
                         getImage1();
+                       // uploadFile(_image1!);
                       },
                       child: const Text('Capture Image',
                           style: TextStyle(fontSize: 18))),
@@ -232,6 +258,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                               builder: (context) => Add_post(img: _image1!),
                             ),
                           );
+                          
                         }
                       else{
                           AlertDialog alert = AlertDialog(
@@ -250,6 +277,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                             },
                           );
                         }
+                        
 
 
                       /*  Navigator.push(
@@ -260,7 +288,9 @@ class _Cam_FireState extends State<Cam_Fire> {
                         );*/
                       },
                       child: const Text('Send',
-                          style: TextStyle(fontSize: 18))),
+                          style: TextStyle(fontSize: 18))
+                          
+                          ),
                 ),
 
               ],

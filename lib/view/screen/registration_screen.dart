@@ -91,7 +91,6 @@ Future<void> signInWithGoogle() async {
 Future<void> _saveUserDataToFirestore(User? user) async {
   if (user != null) {
     String userId = user.uid;
-
     await FirebaseFirestore.instance.collection('users').doc(userId).set({
       'email': user.email,
       'name': userName.text,

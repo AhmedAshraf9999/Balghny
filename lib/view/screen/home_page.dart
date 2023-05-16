@@ -679,7 +679,7 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("Community");
+                  Navigator.of(context).pushNamed("post");
                 },
                 icon: Icon(Icons.groups_outlined,
                     color: currentTab == 2

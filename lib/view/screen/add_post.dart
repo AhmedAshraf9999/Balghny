@@ -1,15 +1,17 @@
 import 'dart:io';
 
 import 'package:balghny/model/post.dart';
+import 'package:balghny/view/screen/com.dart';
 import 'package:balghny/view/screen/community_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class Add_post extends StatefulWidget {
 
 
-  final File img;
+final File img;
   const Add_post({Key? key,required this.img}) : super(key: key);
 
   @override
@@ -17,9 +19,52 @@ class Add_post extends StatefulWidget {
 }
 
 class _Add_postState extends State<Add_post> {
+  
+  TextEditingController addpost = TextEditingController();
+  bool isloading =false ;
+  var img_url;
+  
+Future<void> _saveUserDataToFirestore(String? post_body) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final String? userName = FirebaseAuth.instance.currentUser?.displayName;
+  final String? myPhotoUrl = FirebaseAuth.instance.currentUser?.photoURL;
+   
+ 
+  Reference storageRef = FirebaseStorage.instance.ref().child("images_cate/${DateTime.now().toString()}");
+  UploadTask uploadTask = storageRef.putFile(widget.img);
+  TaskSnapshot snapshot = await uploadTask;
+  String imageUrl = await snapshot.ref.getDownloadURL();
 
+  await firestore.collection('posts').add(
+    {
+      'post_body' : post_body,
+      'time' : DateTime.now(),
+      'username' : userName,
+      'photourl' : myPhotoUrl,
+       'imageUrl': imageUrl,
+    }
+  );
+ 
+}
 
-
+Future<void> _fetchUserData() async {
+  final firebaseUser = await FirebaseAuth.instance.currentUser!;
+  if (firebaseUser != null) {
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(firebaseUser.uid)
+        .get()
+        .then((ds) {
+          
+      setState(() {
+        img_url = ds.data()!['imageurl'] ?? '';
+    
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +133,7 @@ class _Add_postState extends State<Add_post> {
                   SizedBox(
                     width: 350,height: 100,
                     child: TextFormField(
-
+                      controller: addpost,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 60),
                             border: OutlineInputBorder()),
@@ -102,8 +147,23 @@ class _Add_postState extends State<Add_post> {
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
                   height: 40,
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: 
+                  isloading ? Center(child: CircularProgressIndicator(),):
+                  ElevatedButton(
+                    onPressed: () async{
+                      if (addpost.value.text.isNotEmpty) {
+                        _saveUserDataToFirestore(addpost.text);
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostListScreen()),
+                        );
+                      }
+                      setState(() {
+                        isloading = true;
+                        
+                      });
+                      _saveUserDataToFirestore(addpost.value.text).then((value) {
+                        
+                      });
                        },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.green),

@@ -6,6 +6,7 @@ import 'package:balghny/view/screen/cam3_infa_screen.dart';
 
 import 'package:balghny/view/screen/cam4_accidents_screen.dart';
 import 'package:balghny/view/screen/cam_fire_screen.dart';
+import 'package:balghny/view/screen/com.dart';
 import 'package:balghny/view/screen/community_screen.dart';
 import 'package:balghny/view/screen/contactUs_page.dart';
 import 'package:balghny/view/screen/fag_page.dart';
@@ -63,9 +64,10 @@ class MyApp extends StatelessWidget {
         "ContactUs" : (context) => ContactUs(),
         "AboutPage" : (context) => AboutPage(),
         "AccordionPage" : (context) => AccordionPage(),
-        "Community" : (context) => Community(posts: [],),
+//"Community" : (context) => Community(posts: [],),
       //  "r" : (context) => Res(img: '',),
-
+       "post" : (context) => PostListScreen(),
+       
 
       },
     );
