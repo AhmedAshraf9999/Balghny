@@ -26,7 +26,7 @@ class auth extends StatelessWidget {
             return HomePage();
           }else{
             return Login();
-            print("erorr");
+            
           }
         }
         ), 

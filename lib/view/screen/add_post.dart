@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:balghny/model/post.dart';
+import 'package:balghny/view/auth.dart';
 import 'package:balghny/view/screen/com.dart';
 import 'package:balghny/view/screen/community_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,27 +26,38 @@ class _Add_postState extends State<Add_post> {
   
 Future<void> _saveUserDataToFirestore(String? post_body) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final String? userName = FirebaseAuth.instance.currentUser?.displayName;
   final String? myPhotoUrl = FirebaseAuth.instance.currentUser?.photoURL;
-   
- 
   Reference storageRef = FirebaseStorage.instance.ref().child("images_cate/${DateTime.now().toString()}");
   UploadTask uploadTask = storageRef.putFile(widget.img);
   TaskSnapshot snapshot = await uploadTask;
   String imageUrl = await snapshot.ref.getDownloadURL();
+  //final String? userName = FirebaseAuth.instance.currentUser?.displayName;
 
-  await firestore.collection('posts').add(
-    {
-      'post_body' : post_body,
-      'time' : DateTime.now(),
-      'username' : userName,
-      'photourl' : myPhotoUrl,
-       'imageUrl': imageUrl,
-    }
-  );
- 
+  // Retrieve additional data from the 'users' collection
+  DocumentSnapshot userSnapshot = await firestore.collection('users').doc(FirebaseAuth.instance.currentUser?.uid.toString()).get();
+
+  if (userSnapshot.exists) {
+    // User document exists in the 'users' collection
+    final userData = userSnapshot.data() as Map<String, dynamic>;
+    final String? username = userData['name'];
+    final String? userPhotoUrl = userData['photourl'];
+
+    // Add document to 'posts' collection
+    DocumentReference postDocRef = await firestore.collection('posts').add(
+      {
+        'post_body': post_body,
+        'time': DateTime.now(),
+        'username': username,
+        'photourl': userPhotoUrl,
+        'imageUrl': imageUrl,
+      }
+    );
+    print('Post added to Firestore.');
+  } else {
+    // User document does not exist in the 'users' collection
+    print('User document not found in the users collection. Cannot add post.');
 }
-
+}
 Future<void> _fetchUserData() async {
   final firebaseUser = await FirebaseAuth.instance.currentUser!;
   if (firebaseUser != null) {
@@ -58,14 +69,12 @@ Future<void> _fetchUserData() async {
           
       setState(() {
         img_url = ds.data()!['imageurl'] ?? '';
-    
       });
     }).catchError((e) {
       print(e);
     });
   }
 }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,13 +166,6 @@ Future<void> _fetchUserData() async {
                         MaterialPageRoute(builder: (context) => PostListScreen()),
                         );
                       }
-                      setState(() {
-                        isloading = true;
-                        
-                      });
-                      _saveUserDataToFirestore(addpost.value.text).then((value) {
-                        
-                      });
                        },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.green),

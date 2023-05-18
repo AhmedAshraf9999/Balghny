@@ -21,6 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
+  User? user = FirebaseAuth.instance.currentUser;
 
  Future<void> _pickImageAndUpload() async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
@@ -111,7 +113,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       drawer: Drawer(
         child: Padding(
           padding: EdgeInsets.only(top: 0,left: 2,right: 2),
@@ -214,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                           // Sign out of Google 
                           await GoogleSignIn().signOut();
                           // Sign out of Facebook
-                          await FacebookAuth.instance.logOut();
+                          //await FacebookAuth.instance.logOut();
                           Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
                           
                           // await signOutGoogle();

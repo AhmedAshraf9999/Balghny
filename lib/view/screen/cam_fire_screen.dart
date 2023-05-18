@@ -81,12 +81,7 @@ class _Cam_FireState extends State<Cam_Fire> {
       });
     }*/
     if (pickedFile != null) {
-      var imagename = basename(pickedFile.path) ;
-       final storageRef = FirebaseStorage.instance.ref('images_cate')
-        .child('images_fires').child('$imagename');
-        await storageRef.putFile(File(pickedFile.path));
-        final photoUrl = await storageRef.getDownloadURL();
-        
+      var imagename = basename(pickedFile.path) ;      
       setState(() {
         _image1 = File(pickedFile.path);
         doObjectDetection();

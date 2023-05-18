@@ -99,6 +99,8 @@ Future<void> _saveUserDataToFirestore(User? user) async {
   }
 }
 
+
+
 Future<void> _saveUserDataToFirestore1(User? user) async {
   if (user != null) {
     String userId = user.uid;
@@ -131,7 +133,6 @@ var password = TextEditingController() ,
     password: password.text,
     
   );
-
    User? user = usercredential.user;
     if (user != null) {
       await _saveUserDataToFirestore(user);
@@ -155,8 +156,8 @@ var password = TextEditingController() ,
 
    }else{
    }
-
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
