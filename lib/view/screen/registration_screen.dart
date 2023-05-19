@@ -57,26 +57,34 @@ class _RegistrationState extends State<Registration> {
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<void> signInWithGoogle() async {
-  // Create a GoogleSignInAccount object
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  // Create a GoogleSignIn object
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  // Exchange the GoogleSignInAccount for a GoogleSignInAuthentication object
-  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  // Prompt the user to sign in with their Google account
+  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  // Get a credential from the authentication object
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
+  if (googleUser != null) {
+    // Get the authentication data from the GoogleSignInAccount
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-  // Sign in to Firebase with the credential
-  final UserCredential userCredential = await _auth.signInWithCredential(credential);
+    // Create a new credential using the authentication data
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-  // Write the user data to Firestore
-  await _saveUserDataToFirestore1(userCredential.user);
+    try {
+      // Sign in to Firebase with the credential
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        await _saveUserDataToFirestore1(userCredential.user);
+
+      // Do something with the signed-in user...
+      
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
-
-
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> _signOutWithGoogle(BuildContext context) async {

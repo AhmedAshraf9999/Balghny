@@ -7,44 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:210782971110:android:9c4f064fb1a2f0ec818727",
-        "android_client_info": {
-          "package_name": "com.example.balgh"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "210782971110-jhngd8q9e75i4cq8e2b6s59hgc3g377k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.balgh",
-            "certificate_hash": "6a30731c5cdfaf3f9caf1cf4a70b2563b701ae9c"
-          }
-        },
-        {
-          "client_id": "210782971110-hrjpbp53iulg6h9anjsjh44b6od8s8lg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAXxbvtniHci7i-IOmvQBcK-Na_JKn2GQU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "210782971110-3uuve1emppccrkfbocm04ubl1me8kufg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:210782971110:android:ab038bf150dbc4a6818727",
+        "mobilesdk_app_id": "1:210782971110:android:34913c17d46f6915818727",
         "android_client_info": {
           "package_name": "com.example.balghny"
         }
