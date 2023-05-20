@@ -1,5 +1,7 @@
 import 'package:balghny/view/auth.dart';
 import 'package:balghny/view/screen/EditProfileScreen.dart';
+import 'package:balghny/view/screen/hospitals.dart';
+import 'package:balghny/view/screen/Emergency.dart';
 import 'package:balghny/view/screen/about_page.dart';
 import 'package:balghny/view/screen/cam2_water_screen.dart';
 import 'package:balghny/view/screen/cam3_infa_screen.dart';
@@ -12,6 +14,8 @@ import 'package:balghny/view/screen/contactUs_page.dart';
 import 'package:balghny/view/screen/fag_page.dart';
  import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/login_screen.dart';
+import 'package:balghny/view/screen/notification.dart';
+import 'package:balghny/view/screen/profile.dart';
 import 'package:balghny/view/screen/registration_screen.dart';
 import 'package:balghny/view/screen/result.dart';
 import 'package:balghny/view/screen/splash_screen.dart';
@@ -67,6 +71,10 @@ class MyApp extends StatelessWidget {
 //"Community" : (context) => Community(posts: [],),
       //  "r" : (context) => Res(img: '',),
        "post" : (context) => PostListScreen(),
+        "Emergency" : (context) => Emergency(),
+        "Hospitals" : (context) => Hospitals(),
+        "profile" : (context) => ProfileScreen(),
+        "notification" : (context) => notification(),
        
 
       },

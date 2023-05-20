@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:210782971110:android:9c4f064fb1a2f0ec818727",
         "android_client_info": {
-          "package_name": "com.example.balgh"
+          "package_name": "com.example.balghny"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "210782971110-jhngd8q9e75i4cq8e2b6s59hgc3g377k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.balgh",
+            "package_name": "com.example.balghny",
             "certificate_hash": "6a30731c5cdfaf3f9caf1cf4a70b2563b701ae9c"
           }
         },

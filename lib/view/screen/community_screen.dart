@@ -290,3 +290,61 @@ class Data extends StatelessWidget {
   }
 }
 */
+
+
+import 'package:flutter/material.dart';
+
+class c extends StatefulWidget {
+  const c({Key? key}) : super(key: key);
+
+  @override
+  State<c> createState() => _cState();
+}
+
+class _cState extends State<c> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: SafeArea(child: Container(
+        padding: EdgeInsets.all(10),
+       height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Row(children: [
+            Container(
+              margin: EdgeInsets.only(left: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image.asset("assets/images/my.jpg",width: 35,height: 35,) ,
+              ),
+            ),
+          SizedBox(width: 10),
+             Container(
+             //  margin: EdgeInsets.only(right: 140),
+               child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Row(
+                  children: [
+                    Text("Ahmed Ashraf",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                    SizedBox(width: 10),
+                    Text("Upload Post")
+                  ],
+                ),
+                Text("4 hours ago",style: TextStyle(color: Colors.grey))
+            ],),
+             ),
+          ],),
+
+
+        ],),
+      ),),
+    );
+  }
+}
+

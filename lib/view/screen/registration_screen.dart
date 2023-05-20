@@ -56,25 +56,35 @@ class _RegistrationState extends State<Registration> {
 /// signInWithGoogle
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-Future<void> signInWithGoogle() async {
-  // Create a GoogleSignInAccount object
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<void> signInWithGoogle() async {
+    // Create a GoogleSignIn object
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  // Exchange the GoogleSignInAccount for a GoogleSignInAuthentication object
-  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    // Prompt the user to sign in with their Google account
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  // Get a credential from the authentication object
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
+    if (googleUser != null) {
+      // Get the authentication data from the GoogleSignInAccount
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-  // Sign in to Firebase with the credential
-  final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      // Create a new credential using the authentication data
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-  // Write the user data to Firestore
-  await _saveUserDataToFirestore1(userCredential.user);
-}
+      try {
+        // Sign in to Firebase with the credential
+        final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        await _saveUserDataToFirestore1(userCredential.user);
+
+        // Do something with the signed-in user...
+
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
 
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -109,8 +119,6 @@ Future<void> _saveUserDataToFirestore1(User? user) async {
       'email': user.email,
       'name': user.displayName,
       'photoUrl' : user.photoURL,
-      
-
     });
   }
 }
@@ -125,7 +133,6 @@ var password = TextEditingController() ,
   signup() async {
    var formData = formstate.currentState;
    if (formData!.validate()) {
-
      formData.save();
     try {
    UserCredential usercredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -139,7 +146,6 @@ var password = TextEditingController() ,
     }
 
   return usercredential ;
-
 } on FirebaseAuthException catch (e) {
   if (e.code == 'weak-password') {
     AwesomeDialog(context: context,title: "this is Erorr",body: Text('The password provided is too weak'))..show();
@@ -147,17 +153,17 @@ var password = TextEditingController() ,
         print('The password provided is too weak');
         } else if (e.code == 'email-already-in-use') {
           AwesomeDialog(context: context,title: "this is Erorr",body: Text('The account already exists for that email'))..show();
-          print('The account already exists for that email');   
-    
+          print('The account already exists for that email');
   }
 } catch (e) {
   print(e);
 }
-
    }else{
    }
   }
-  
+
+  bool _obscureText = true;
+  bool _obscureText1 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,28 +182,7 @@ var password = TextEditingController() ,
                   ],),
                 ],
               ),
-
               Text("Create Your Account",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-
-           /*   Column(
-                children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/profile1.jpg'),
-                          radius: 50,
-                        ),
-                      ),
-                      InkWell(onTap: (){},
-                        child: Container(margin: EdgeInsets.only(top: 70),
-                            child: Center(child: Icon(Icons.add_circle,color: Colors.grey,))),
-                      ),
-                    ],
-                  ),
-
-                ],
-              ),*/
               SizedBox(height: 15,),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
@@ -210,7 +195,7 @@ var password = TextEditingController() ,
                       controller: userName,
                             validator: (val) {
                               if (val!.length > 50) {
-                                return ("can not to be large then 50");                              
+                                return ("can not to be large then 50");
                               }
                               if (val.length < 2){
                                 return("can not to be small then 2");
@@ -229,7 +214,7 @@ var password = TextEditingController() ,
                       child: TextFormField(
                          validator: (val) {
                               if (val!.length > 50) {
-                                return ("can not to be large then 50");                              
+                                return ("can not to be large then 50");
                               }
                               if (val.length < 2){
                                 return("can not to be small then 2");
@@ -247,22 +232,30 @@ var password = TextEditingController() ,
                     SizedBox(height: 15,),
                     SizedBox(height: 50,
                       child: TextFormField(
+                        obscureText: _obscureText,
                         controller: password,
                              validator: (val) {
                               if (val!.length > 50) {
-                                return ("can not to be large then 50");                              
+                                return ("can not to be large then 50");
                               }
                               if (val.length < 4){
                                 return("can not to be small then 4");
                               }
                             },
-                        obscureText: true,
+                      // obscureText: true,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Enter your password here',
                             labelText: 'Password',
-                          suffixIcon: Icon(Icons.remove_red_eye)
-                
+                            suffixIcon: IconButton(
+                              icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                              onPressed: (){
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                            )
+
                         ),
                       ),
                     ),
@@ -270,21 +263,28 @@ var password = TextEditingController() ,
                     SizedBox(height: 50,
                       child: TextFormField(
                         controller: Confirmpassword,
-                
+                        obscureText: _obscureText1,
                          validator: (val) {
                             if (val!.length > 50) {
-                              return ("can not to be large then 50");                              
+                              return ("can not to be large then 50");
                               }
                             if (val.length < 4){
                               return("can not to be small then 4");
                               }
                             },
-                        obscureText: true,
+                       // obscureText: true,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Confirm Password here',
                             labelText: 'Confirm Password',
-                          suffixIcon: Icon(Icons.remove_red_eye)
+                            suffixIcon: IconButton(
+                              icon: Icon(_obscureText1 ? Icons.visibility : Icons.visibility_off),
+                              onPressed: (){
+                                setState(() {
+                                  _obscureText1 = !_obscureText1;
+                                });
+                              },
+                            )
                         ),
                       ),
                     ),
@@ -292,23 +292,20 @@ var password = TextEditingController() ,
                 ),),
               SizedBox(height: 40),
           Container(child: Column(children: [
-
             Row(
               children: [
                  Expanded(
-                        
-                        child: 
-                        Container(
+                        child:  Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: SizedBox(
                           height: 40,
-                          child: 
+                          child:
                           ElevatedButton(
                             onPressed: () async {
                             UserCredential response = await signup();
                             if (response!= null) {
                                Navigator.of(context).pushReplacementNamed("/");
- 
+
                             }else{
                               print('sign up faild');
                             }
@@ -321,7 +318,7 @@ var password = TextEditingController() ,
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)))),
                             child: Text(
-                              'Sign',
+                              'Sign up',
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white),
@@ -330,131 +327,59 @@ var password = TextEditingController() ,
                         ),
                       ),
                       ),
-                
+
               ],
             ),
-            SizedBox(height: 6,),
+            SizedBox(height: 10,),
             Row(children: [
               Expanded(child:  Center(child: Text("Or Sign up with",style: TextStyle(color: Colors.grey),)))
             ],),
             SizedBox(height: 6,),
-            Stack(
-              children: [
-                Row(
-                  children: [
-                     Expanded(
-                        
-                        child: 
-                        Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: SizedBox(
-                          height: 40,
-                          child: 
-                          ElevatedButton(
-                            onPressed: () async {
-                                  try {
-                                    await signInWithGoogle();
-                                    Navigator.of(context).pushReplacementNamed('home');
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Sign in success!')),
-                                      
-                                    );
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Error signing in.')),
-                                    );
+            Row(children: [
+              Expanded(child:  Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+            //    IconButton(onPressed: (){}, icon:  )
+                InkWell(
+                  onTap: () async {
+                    try {
+                      await signInWithGoogle();
+                      Navigator.of(context).pushReplacementNamed('home');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Sign in success!')),
 
-                                  }
-                                },
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.green),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)))),
-                            child: Text(
-                              'Continue with Google',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ),
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 15,top: 0),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error signing in.')),
+                      );
+
+                    }
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.asset("assets/images/google (1).png",width: 50,height: 40,) ,
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 15,),
-            Stack(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                        child: 
-                        Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: SizedBox(
-                          height: 40,
-                          child: 
-                          ElevatedButton(
-                            onPressed: ()async {
-                              await signInWithFacebookAndSaveToFirestore();
-                              Navigator.of(context).pushReplacementNamed('home');
-
-                              print("Facebook");},
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.green),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)))),
-                            child: Text(
-                              'Continue with Facebook',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ),
-                  ],
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(left: 15,top: 0),
+                SizedBox(width: 20),
+                InkWell(
+                  onTap: ()async {
+                    await signInWithFacebookAndSaveToFirestore();
+                    Navigator.of(context).pushReplacementNamed('home');
+                    print("Facebook");},
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset("assets/images/face1.png",width: 50,height: 40,) ,
+                    child: Image.asset("assets/images/facebookicon.png",width: 50,height: 40,) ,
                   ),
                 ),
-                /*
-                Container(
-                  margin: EdgeInsets.only(left: 20,top: 5),
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/Face.png'),
-                    radius: 20,
-
-                  ),
-                ),
-                 */
-              ],
-            ),
-            SizedBox(height: 10,),
+              ],))
+            ],),
+            SizedBox(height: 15,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
               Text("     Already have an account?",style: TextStyle(fontSize: 15),),
-              SizedBox(width: 10,),
+              SizedBox(width: 5,),
               InkWell( onTap: (){
                 Navigator.of(context).pushNamed("login");
               },
@@ -462,7 +387,7 @@ var password = TextEditingController() ,
             ],),
 
           ],),),
-              SizedBox(height: 20,),
+              SizedBox(height: 10,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

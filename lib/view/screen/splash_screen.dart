@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:balghny/view/screen/login_screen.dart';
 import 'package:balghny/view/screen/registration_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class Splash extends StatelessWidget {
 
 
       ),
-      nextScreen: const Registration(),
+      nextScreen: const Login(),
       splashIconSize: 300,
       duration: 4000,
       splashTransition: SplashTransition.slideTransition,

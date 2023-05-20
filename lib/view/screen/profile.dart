@@ -88,7 +88,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
+      title: Text("My Profile"),
+      centerTitle: true,
       backgroundColor: Colors.green,
+      leading: IconButton(onPressed: (){
+        Navigator.of(context).pushNamed("home");
+      },icon: Icon(Icons.arrow_back),),
     ),
     body: Padding(
       padding: const EdgeInsets.all(20.0),
@@ -128,102 +133,128 @@ Widget build(BuildContext context) {
                     ),
                   ],
                 ),
-                Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: FloatingActionButton(
-                    child: Icon(Icons.camera_alt),
-                    onPressed: _pickImageAndUpload,
-                  ),
-                ),
+
               ],
             ),
             SizedBox(
-              height: 20.0,
+              height: 50.0,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Name",
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+
                   SizedBox(
                       height: 5,
                     ),
-                  Text(
-                    myName ?? "",
-                    style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                  Text(
-                      "Phone",
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
+                  Container(margin: EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+
+                        Text(
+                          "Name:  ",
+                          style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 10,),
+                        Text(
+                          myName ?? "",
+                          style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold),
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(margin: EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                            "Phone: ",
+                            style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        SizedBox(width: 10,),
+                        Text(
+                          myPhoneNumber ?? "01122529191",
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                    Container(margin: EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Email:  ",
+                            style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+
+                          SizedBox(width: 10,),
+
+                          Text(
+                            myEmail ?? "karim@",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(margin: EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            "City:     ",
+                            style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            myCity ?? "",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                       myPhoneNumber ?? "01122529191",
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    ),
-                     SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "Email",
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      myEmail ?? "karim@",
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "City",
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      myCity ?? "",
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    ),
+
               ],
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 80,),
             Row(
               
               mainAxisAlignment: MainAxisAlignment.end,

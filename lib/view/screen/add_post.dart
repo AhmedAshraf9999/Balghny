@@ -83,7 +83,7 @@ Future<void> _fetchUserData() async {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios)),
+            icon: Icon(Icons.arrow_back)),
         title: Text('Create New Post'),
         centerTitle: true,
       ),
@@ -95,20 +95,8 @@ Future<void> _fetchUserData() async {
               Center(
                 child: Stack(
                   children: [
-
                     Center(child: Image.file(widget.img,width: 200, height: 200, fit:BoxFit.fill),
-
-                 //       Image.asset("assets/images/my.jpg",width: 150, height: 150, fit:BoxFit.fill,)
                     )
-
-                   /* Container(
-                        margin: EdgeInsets.only(left: 45,top: 70),
-                        child: IconButton(onPressed: (){},
-                        icon: Icon(Icons.add,color: Colors.green),)),
-                    Container(
-                        margin: EdgeInsets.only(left: 33,top: 40),
-                        child: Image.asset("assets/images/Add photo.png")),
-                    Image.asset("assets/images/Rectangle 1027.png"),*/
                   ],
                 ),
               ),
@@ -124,7 +112,9 @@ Future<void> _fetchUserData() async {
                   ),
                   SizedBox(height: 5),
                   SizedBox(width: 350,
-                    child:  Text("Fire-Disaster",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    child:  Container(margin:EdgeInsets.only(left: 30,top: 5),
+
+                        child: Text("Fire-Disaster",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
                   ),
                 ],
               ),
@@ -140,11 +130,11 @@ Future<void> _fetchUserData() async {
                   ),
                   SizedBox(height: 5),
                   SizedBox(
-                    width: 350,height: 100,
+                    width: 330,height: 100,
                     child: TextFormField(
                       controller: addpost,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 60),
+                            contentPadding: EdgeInsets.symmetric(vertical: 60,horizontal: 10),
                             border: OutlineInputBorder()),
 
                     ),
