@@ -1,16 +1,13 @@
 import 'package:balghny/view/screen/login_screen.dart';
 import 'package:balghny/view/screen/profile.dart';
-import 'package:balghny/view/widget/defaultBtn.dart';
-import 'package:balghny/view/widget/notification_widget.dart';
+
+
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:balghny/model/user_notification.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+  import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
