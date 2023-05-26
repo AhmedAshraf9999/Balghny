@@ -1,10 +1,7 @@
-
-
-
 import 'package:balghny/view/screen/community_screen.dart';
 import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/login_screen.dart';
-
+import 'package:balghny/view/screen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +22,7 @@ class auth extends StatelessWidget {
 
             return HomePage();
           }else{
-            return Login();
+            return Splash();
             
           }
         }

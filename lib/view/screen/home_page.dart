@@ -1,16 +1,13 @@
 import 'package:balghny/view/screen/login_screen.dart';
 import 'package:balghny/view/screen/profile.dart';
-import 'package:balghny/view/widget/defaultBtn.dart';
-import 'package:balghny/view/widget/notification_widget.dart';
+
+
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:balghny/model/user_notification.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+  import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
@@ -144,22 +141,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-               /*  Container(
-                child: UserAccountsDrawerHeader(
-                  currentAccountPicture: CircleAvatar(
-                    backgroundImage: (AssetImage("assets/images/my.jpg")),
-                  ),
-                  accountName: Text("Ahmed Ashraf"),
-                  accountEmail: Text("ahmedashraf@gmail.com"),
-                ),
-              ),*/
               Expanded(
                   flex: 5,
                   child: SingleChildScrollView(
                     child: Column(children: [
-
                       SizedBox(height: 20,),
-
                 ListTile(
                     title: Text("My Profile"),
                     leading: Icon(Icons.person),
@@ -182,9 +168,14 @@ class _HomePageState extends State<HomePage> {
                         onTap: () { Navigator.of(context).pushReplacementNamed('AboutPage');},
                       ),
                       ListTile(
-                        title: Text("resault"),
-                        leading: Icon(Icons.dataset),
-                        onTap: () { Navigator.of(context).pushReplacementNamed('r');},
+                        title: Text("Emergency"),
+                        leading: Icon(Icons.emergency),
+                        onTap: () { Navigator.of(context).pushReplacementNamed('Emergency');},
+                      ),
+                      ListTile(
+                        title: Text("Hospitals"),
+                        leading: Icon(Icons.local_hospital_rounded),
+                        onTap: () { Navigator.of(context).pushReplacementNamed('Hospitals');},
                       ),
 
 
@@ -209,46 +200,50 @@ class _HomePageState extends State<HomePage> {
               // SizedBox(height: 20,),
               Expanded(
                 flex: 1,
-                child: Row(children: [
-                 InkWell( onTap: ()async{
-                          FirebaseAuth.instance.signOut();
-                          await FirebaseAuth.instance.signOut();
-                          // Sign out of Google 
-                          await GoogleSignIn().signOut();
-                          // Sign out of Facebook
-                          //await FacebookAuth.instance.logOut();
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
-                          
-                          // await signOutGoogle();
-                        },child: Container(
-                    padding: EdgeInsets.all(5),
-                    width: 110,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //Icon(Icons.power_settings_new),
-                        Stack(children: [
-                          CircleAvatar(
-                            radius: 14,
-                            backgroundColor: Colors.white,
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 2),
-                            child: Icon(
-                                Icons.power_settings_new,color: Colors.deepOrangeAccent),
-                          )
-                        ],),
-                        SizedBox(width: 10,),
-                        Text("Log Out",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
+                child: Container(
+                  margin: EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: [
+                   InkWell( onTap: ()async{
+                            FirebaseAuth.instance.signOut();
+                            await FirebaseAuth.instance.signOut();
+                            // Sign out of Google
+                            await GoogleSignIn().signOut();
+                            // Sign out of Facebook
+                            //await FacebookAuth.instance.logOut();
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
 
-                      ],),
-                  ),)
-                ],),
+                            // await signOutGoogle();
+                          },child: Container(
+                      padding: EdgeInsets.all(5),
+                      width: 130,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color:  Color(0xFF1ABC00),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Icon(Icons.power_settings_new),
+                          Stack(children: [
+                            CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.white,
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(left: 2),
+                              child: Icon(
+                                  Icons.power_settings_new,color: Color(0xFF1ABC00)),
+                            )
+                          ],),
+                          SizedBox(width: 10,),
+                          Text("Log Out",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
+
+                        ],),
+                    ),)
+                  ],),
+                ),
               )
             ],
           ),
@@ -258,18 +253,14 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
         padding: EdgeInsets.all(10),
         child:  Column(children: [
-            SizedBox(height: 10,),
           Expanded(
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 40,
                     height: 40,
                     margin: EdgeInsets.only(left: 5,),
-
-                    // margin: EdgeInsets.only(left: 20, top: 30),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15)),
@@ -286,10 +277,8 @@ class _HomePageState extends State<HomePage> {
                               ));
                         }
                     )),
-
                 Expanded(
                   child: Column(children: [
-
                   ],),
                 ),
                 Text('Choose your report',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25)),
@@ -298,7 +287,8 @@ class _HomePageState extends State<HomePage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: GestureDetector(
-                          onTap: _pickImageAndUpload, // Call the method to pick an image and upload it to Firebase
+                        onTap:(){},
+                        //  onTap: _pickImageAndUpload, // Call the method to pick an image and upload it to Firebase
                           child: Container(
                             width: 35,
                             height: 35,
@@ -317,47 +307,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],),
           ),
-      /*    Row(children: [
-            Expanded(flex: 1,child: Container(
-                width: 40,
-                height: 40,
-                margin: EdgeInsets.only(left: 10, top: 10),
 
-                // margin: EdgeInsets.only(left: 20, top: 30),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Builder(
-                    builder: (context) {
-                      return IconButton(
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                          icon: Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                            size: 15,
-                          ));
-                    }
-                )),),
-            Expanded(flex: 5,child: Container()),
-            Expanded(flex: 1,child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset("assets/images/my.jpg",width: 40,height: 40,) ,
-            ),)
-          ],),
-*/
           Expanded(
             child: Container(
               margin: EdgeInsets.only(left: 20),
               child: Column(children: [
-                SizedBox(height: 20,),
-          /*      Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Choose your report',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25)),
-                  ],
-                ),*/
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -366,14 +320,12 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-
-                //Text('بلاغك',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
               ],),
             ),
           ),
 
      Expanded(
-       flex: 7,
+       flex: 8,
        child: SingleChildScrollView(
          scrollDirection: Axis.vertical,
          child: Column(
@@ -383,12 +335,11 @@ class _HomePageState extends State<HomePage> {
                children: [
                Expanded(
                  child: InkWell(
-                  // onTap: ()=> Navigator.of(context).pushNamed("Cam_Fire"),
-                   onTap: ()=> Navigator.of(context).pushNamed("Cam_Fire"),
+                       onTap: ()=> Navigator.of(context).pushNamed("Cam_Fire"),
                    child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                       height: 180,
+                       height: 190,
                        width: 170,
                        decoration: BoxDecoration(
                            color: Colors.grey[200],
@@ -400,7 +351,7 @@ class _HomePageState extends State<HomePage> {
                          children: [
                            ClipRRect(
                              borderRadius: BorderRadius.circular(10.0),
-                             child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                             child: Image.asset("assets/images/fire.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                            ),
                            SizedBox(height: 5,),
                            //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -419,7 +370,7 @@ class _HomePageState extends State<HomePage> {
                    child: Container(
                      //margin: EdgeInsets.only(bottom: 20),
                      // padding: EdgeInsets.all(5),
-                       height: 180,
+                       height: 190,
                        width: 170,
                        decoration: BoxDecoration(
                            color: Colors.grey[200],
@@ -431,13 +382,13 @@ class _HomePageState extends State<HomePage> {
                          children: [
                            ClipRRect(
                              borderRadius: BorderRadius.circular(10.0),
-                             child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                             child: Image.asset("assets/images/water.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                            ),
                            SizedBox(height: 5,),
                            //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
                            Container(
                                margin: EdgeInsets.only(right: 20),
-                               child: Text("Water disaster",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                               child: Text("Water Disaster",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                            SizedBox(height: 5,),
                          ],
                        )),
@@ -455,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -467,7 +418,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/Infra.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -486,7 +437,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -498,7 +449,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/acc.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -521,7 +472,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -533,7 +484,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -552,7 +503,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -564,7 +515,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -587,7 +538,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -599,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -618,7 +569,7 @@ class _HomePageState extends State<HomePage> {
                      child: Container(
                        //margin: EdgeInsets.only(bottom: 20),
                        // padding: EdgeInsets.all(5),
-                         height: 180,
+                         height: 190,
                          width: 170,
                          decoration: BoxDecoration(
                              color: Colors.grey[200],
@@ -630,7 +581,7 @@ class _HomePageState extends State<HomePage> {
                            children: [
                              ClipRRect(
                                borderRadius: BorderRadius.circular(10.0),
-                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 145,fit: BoxFit.fill,) ,
+                               child: Image.asset("assets/images/r1.jpg",width:double.infinity,height: 150,fit: BoxFit.fill,) ,
                              ),
                              SizedBox(height: 5,),
                              //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
@@ -672,9 +623,13 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
+              //Icon("assets/icons/emergency-call.png")
+
               IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.dark_mode_rounded,
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('Emergency');
+                },
+                icon: Icon(Icons.help_outlined,
                     color: currentTab == 1
                         ? const Color(0xFF1ABC00)
                         : Colors.black),
@@ -683,7 +638,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.of(context).pushNamed("post");
                 },
-                icon: Icon(Icons.groups_outlined,
+                icon: Icon(Icons.groups,
                     color: currentTab == 2
                         ? Colors.green
                         : Colors.black),
@@ -693,14 +648,9 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 onPressed: () {
-                 // Navigator.of(context).pushNamed("noti");
+                   Navigator.of(context).pushNamed("notification");
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NotificationWidget(notification:  null),
-                    ),
-                  );
+
                 },
                 icon: Icon(Icons.notifications_active,
                     color: currentTab == 4

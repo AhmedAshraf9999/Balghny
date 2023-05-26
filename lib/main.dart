@@ -1,5 +1,7 @@
 import 'package:balghny/view/auth.dart';
 import 'package:balghny/view/screen/EditProfileScreen.dart';
+import 'package:balghny/view/screen/hospitals.dart';
+import 'package:balghny/view/screen/Emergency.dart';
 import 'package:balghny/view/screen/about_page.dart';
 import 'package:balghny/view/screen/cam2_water_screen.dart';
 import 'package:balghny/view/screen/cam3_infa_screen.dart';
@@ -7,16 +9,17 @@ import 'package:balghny/view/screen/cam3_infa_screen.dart';
 import 'package:balghny/view/screen/cam4_accidents_screen.dart';
 import 'package:balghny/view/screen/cam_fire_screen.dart';
 import 'package:balghny/view/screen/com.dart';
-import 'package:balghny/view/screen/community_screen.dart';
+
 import 'package:balghny/view/screen/contactUs_page.dart';
 import 'package:balghny/view/screen/fag_page.dart';
  import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/login_screen.dart';
+import 'package:balghny/view/screen/notification.dart';
+import 'package:balghny/view/screen/profile.dart';
 import 'package:balghny/view/screen/registration_screen.dart';
-import 'package:balghny/view/screen/result.dart';
-import 'package:balghny/view/screen/splash_screen.dart';
-import 'package:balghny/view/screen/temp.dart';
-import 'package:balghny/view/widget/notification_widget.dart';
+
+
+
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
        "login" : (context) => Login(),
         "register" : (context) => Registration(),
         "home" : (context) => HomePage(),
-         "cam" : (context) => Cam(),
+     //    "cam" : (context) => Cam(),
         "Cam_Fire" : (context) => Cam_Fire(),
         "cam2" : (context) => Cam2(),
         "cam3" : (context) => Cam3(),
@@ -67,6 +70,10 @@ class MyApp extends StatelessWidget {
 //"Community" : (context) => Community(posts: [],),
       //  "r" : (context) => Res(img: '',),
        "post" : (context) => PostListScreen(),
+        "Emergency" : (context) => Emergency(),
+        "Hospitals" : (context) => Hospitals(),
+        "profile" : (context) => ProfileScreen(),
+        "notification" : (context) => notification(),
        
 
       },
