@@ -1,19 +1,19 @@
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'dart:ui';
+import 'package:balghny/view/screen/add_post.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class Cam2 extends StatefulWidget {
@@ -24,11 +24,14 @@ class Cam2 extends StatefulWidget {
 }
 
 class _Cam2State extends State<Cam2> {
+
+  //var myPhotoUrl = "";
+  var img_url;
   String result = "";
-  File? _image;
-  var image;
-  String? _imagepath;
-  String i = "assets/images/my.jpg";
+  File? _image1;
+  var image ;
+  // String? _imagepath;
+  // String i = "assets/images/my.jpg";
   late ImagePicker imagePicker;
 
   //TODO declare detector
@@ -36,10 +39,14 @@ class _Cam2State extends State<Cam2> {
 
   late List<DetectedObject> objects;
 
+
+
+
   @override
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
+
     //TODO initialize detector
     createObjectDetection();
   }
@@ -50,24 +57,43 @@ class _Cam2State extends State<Cam2> {
     objectDetector.close();
   }
 
+
+
+  //final picker = ImagePicker();
+
+
   //TODO capture image using camera
-  void getImage({required ImageSource source}) async {
-    XFile? file = await ImagePicker().pickImage(
-        source: source,
-        maxWidth: 640,
+  // late File _image1;
+  final picker = ImagePicker();
+  Future<void> getImage1() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera
+        ,   maxWidth: 640,
         maxHeight: 480,
-        imageQuality: 70 //0 - 100
+        imageQuality: 80 //0 - 100
+
     );
 
-    if (file?.path != null) {
+    if (pickedFile != null) {
+      var imagename = basename(pickedFile.path) ;
       setState(() {
-        _image = File(file!.path);
+        _image1 = File(pickedFile.path);
         doObjectDetection();
       });
     }
+    else {
+      print('No image selected.');
+    }
+
+
+
   }
 
+
+
+
   //TODO face detection code here
+
+
 
   Future<String> _getModel(String assetPath) async {
     if (Platform.isAndroid) {
@@ -96,7 +122,7 @@ class _Cam2State extends State<Cam2> {
 
   doObjectDetection() async {
     result = "";
-    final InputImage inputImage = InputImage.fromFile(_image!);
+    final InputImage inputImage = InputImage.fromFile(_image1!);
     objects = await objectDetector.processImage(inputImage);
 
     drawRectanglesAroundObjects();
@@ -104,7 +130,7 @@ class _Cam2State extends State<Cam2> {
 
   //TODO draw rectangles
   drawRectanglesAroundObjects() async {
-    image = await _image?.readAsBytes();
+    image = await _image1?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
       image;
@@ -118,8 +144,7 @@ class _Cam2State extends State<Cam2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Capturing Images'),
-        centerTitle: true,
+        title: const Text('Image Picker'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -130,17 +155,19 @@ class _Cam2State extends State<Cam2> {
                 ? Container(
                 width: 640,
                 height: 480,
+                //  height: 300,
                 margin: const EdgeInsets.only(
                   top: 45,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   image: DecorationImage(
-                      image: FileImage(_image!), fit: BoxFit.cover),
+                      image: FileImage(_image1!), fit: BoxFit.cover),
                   border: Border.all(width: 8, color: Colors.black),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: Center(
+                child:
+                Center(
                   child: FittedBox(
                     child: SizedBox(
                       width: image.width.toDouble(),
@@ -153,21 +180,21 @@ class _Cam2State extends State<Cam2> {
                   ),
                 ))
                 : Expanded(
-                  child: Container(
-              width: 640,
-              height: 480,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
+              child: Container(
+                width: 640,
+                height: 480,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
                   color: Colors.grey,
                   border: Border.all(width: 8, color: Colors.black12),
                   borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: const Text(
+                ),
+                child: const Text(
                   'Image should appear here',
                   style: TextStyle(fontSize: 26),
+                ),
               ),
             ),
-                ),
             const SizedBox(
               height: 20,
             ),
@@ -176,59 +203,65 @@ class _Cam2State extends State<Cam2> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        getImage(source: ImageSource.camera);
-
-                        // _save();
-                        //   save2(imageFile);
-                        // s();
+                        getImage1();
+                        // uploadFile(_image1!);
                       },
                       child: const Text('Capture Image',
                           style: TextStyle(fontSize: 18))),
-                )
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        if(result == "Fire-Disaster" || result != "Non Damage"){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Add_post(img: _image1!),
+                            ),
+                          );
+                        }
+
+                        else{
+
+                          AlertDialog alert = AlertDialog(
+                            title: Text("Fake Image"),
+                            content: Text("This Image Not Damage."),
+                            actions: [
+
+                            ],
+                          );
+
+                          // show the dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            },
+                          );
+
+
+
+                        }
+
+
+                      },
+                      child: const Text('Send',
+                          style: TextStyle(fontSize: 18))
+
+                  ),
+                ),
+
               ],
             ),
           ],
         ),
       ),
+
     );
   }
 
-  _save() async {
-    var response = await Dio()
-        .get(_image!.path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 80,
-        name: "hello");
-    print(result);
-  }
 
-  void pickimage() async {
-    XFile? pickedFile =
-    await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _image = File(pickedFile.path);
-      doObjectDetection();
-    }
-  }
-
-  save2(path) async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    saveimage.setString("imagepath", path);
-  }
-
-  Load() async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    setState(() {
-      _imagepath = saveimage.getString("imagepath");
-    });
-  }
-
-  s() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
-    GallerySaver.saveImage(image.path);
-  }
 }
 
 class ObjectPainter extends CustomPainter {

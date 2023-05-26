@@ -68,18 +68,11 @@ class _Cam_FireState extends State<Cam_Fire> {
   Future<void> getImage1() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera
     ,   maxWidth: 640,
-        maxHeight: 480,
-        imageQuality: 70 //0 - 100
+       maxHeight: 480,
+        imageQuality: 80 //0 - 100
 
     );
 
-    
-  /*  if (pickedFile?.path != null) {
-      setState(() {
-        _image1 = File(pickedFile!.path);
-        doObjectDetection();
-      });
-    }*/
     if (pickedFile != null) {
       var imagename = basename(pickedFile.path) ;      
       setState(() {
@@ -96,38 +89,11 @@ class _Cam_FireState extends State<Cam_Fire> {
   }
 
   
-  /* void getImage({required ImageSource source}) async {
-    XFile? file = await ImagePicker().pickImage(
-          //file = await ImagePicker().pickImage(
-       source: source,
-       // source: ImageSource.camera,
-        maxWidth: 640,
-        maxHeight: 480,
-        imageQuality: 70 //0 - 100
-    );
-    if (file?.path != null) {
-      setState(() {
-        _image = File(file!.path);
-        doObjectDetection();
-      });
-    }
-  }*/
+
 
   //TODO face detection code here
 
-/*Future<String> uploadFile(File file) async {
-  try {
-    final fileName = basename(file.path);
-    
-    final ref = FirebaseStorage.instance.ref('imagescate').child('images_fires').child('path');
-    await ref.putFile(file);
-    final downloadURL = await ref.getDownloadURL();
-    return downloadURL;
-  } catch (e) {
-    print(e);
-    return'';
-}
-}*/
+
 
   Future<String> _getModel(String assetPath) async {
     if (Platform.isAndroid) {
@@ -189,6 +155,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                 ? Container(
                 width: 640,
                 height: 480,
+              //  height: 300,
                 margin: const EdgeInsets.only(
                   top: 45,
                 ),
@@ -246,16 +213,17 @@ class _Cam_FireState extends State<Cam_Fire> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        if(result != "Fire-Disaster"){
+                        if(result == "Fire-Disaster" || result != "Non Damage"){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Add_post(img: _image1!),
                             ),
                           );
-                          
                         }
+
                       else{
+
                           AlertDialog alert = AlertDialog(
                             title: Text("Fake Image"),
                             content: Text("This Image Not Damage."),
@@ -271,16 +239,12 @@ class _Cam_FireState extends State<Cam_Fire> {
                               return alert;
                             },
                           );
+
+
+
                         }
                         
 
-
-                      /*  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Add_post(img: _image1!),
-                          ),
-                        );*/
                       },
                       child: const Text('Send',
                           style: TextStyle(fontSize: 18))
@@ -297,42 +261,7 @@ class _Cam_FireState extends State<Cam_Fire> {
     );
   }
 
-  /*_save() async {
-    var response = await Dio()
-        .get(_image1!.path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 80,
-        name: "hello");
-    print(result);
-  }*/
 
-  /*void pickimage() async {
-    XFile? pickedFile =
-    await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _image1 = File(pickedFile.path);
-      doObjectDetection();
-    }
-  }*/
-
- /* save2(path) async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    saveimage.setString("imagepath", path);
-  }*/
-
-  /*Load() async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    setState(() {
-      _imagepath = saveimage.getString("imagepath");
-    });
-  }*/
-
-  /*s() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
-    GallerySaver.saveImage(image.path);
-  }*/
 }
 
 class ObjectPainter extends CustomPainter {
