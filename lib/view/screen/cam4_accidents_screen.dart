@@ -1,15 +1,9 @@
 import 'dart:io';
 
-import 'dart:ui';
 import 'package:balghny/view/screen/add_post.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

@@ -21,30 +21,7 @@ class _HomePageState extends State<HomePage> {
   
   User? user = FirebaseAuth.instance.currentUser;
 
- Future<void> _pickImageAndUpload() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      // Get a reference to the Firebase Storage location
-      final storageRef = FirebaseStorage.instance.ref()
-          .child('profile_images')
-          .child(FirebaseAuth.instance.currentUser!.uid + '.jpg');
-
-      // Upload the file to Firebase Storage
-      await storageRef.putFile(File(pickedFile.path));
-
-      // Update the user's photo URL in Firestore
-      final photoUrl = await storageRef.getDownloadURL();
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({'photoUrl': photoUrl});
-      
-      setState(() {
-        myPhotoUrl = photoUrl;
-      });
-    }
-  }
 
  var myEmail = "";
   var myName = "";

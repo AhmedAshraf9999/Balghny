@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:balghny/model/post.dart';
-import 'package:balghny/view/auth.dart';
+
 import 'package:balghny/view/screen/com.dart';
-import 'package:balghny/view/screen/community_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Add_post extends StatefulWidget {
 
@@ -19,12 +19,61 @@ final File img;
 }
 
 class _Add_postState extends State<Add_post> {
+
+  String location ='Null, Press Button';
+  String Address = 'search';
+
+
   
   TextEditingController addpost = TextEditingController();
   bool isloading =false ;
   var img_url;
-  
+
+  //////////location fun
+  Future<Position> _getGeoLocationPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+
+
+  Future<void> GetAddressFromLatLong(Position position)async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    print(placemarks);
+    Placemark place = placemarks[0];
+    Address = ' ${place.street},  ';
+    setState(()  {
+    });
+
+
+    //${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}
+  }
+  ////////////
+
+  ///
+
+
 Future<void> _saveUserDataToFirestore(String? post_body) async {
+
+
+    //////////
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final String? myPhotoUrl = FirebaseAuth.instance.currentUser?.photoURL;
   Reference storageRef = FirebaseStorage.instance.ref().child("images_cate/${DateTime.now().toString()}");
@@ -50,6 +99,9 @@ Future<void> _saveUserDataToFirestore(String? post_body) async {
         'username': username,
         'photourl': userPhotoUrl,
         'imageUrl': imageUrl,
+        'Address': Address,
+
+
       }
     );
     print('Post added to Firestore.');
@@ -58,23 +110,8 @@ Future<void> _saveUserDataToFirestore(String? post_body) async {
     print('User document not found in the users collection. Cannot add post.');
 }
 }
-Future<void> _fetchUserData() async {
-  final firebaseUser = await FirebaseAuth.instance.currentUser!;
-  if (firebaseUser != null) {
-    await FirebaseFirestore.instance
-        .collection('posts')
-        .doc(firebaseUser.uid)
-        .get()
-        .then((ds) {
-          
-      setState(() {
-        img_url = ds.data()!['imageurl'] ?? '';
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
-}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,8 +150,8 @@ Future<void> _fetchUserData() async {
                   SizedBox(height: 5),
                   SizedBox(width: 350,
                     child:  Container(margin:EdgeInsets.only(left: 30,top: 5),
-
-                        child: Text("Fire-Disaster",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
+//"Fire-Disaster"
+                        child: Text('${Address}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
                   ),
                 ],
               ),
@@ -142,6 +179,7 @@ Future<void> _fetchUserData() async {
                 ],
               ),
               SizedBox(height: 20,),
+
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
@@ -150,7 +188,17 @@ Future<void> _fetchUserData() async {
                   isloading ? Center(child: CircularProgressIndicator(),):
                   ElevatedButton(
                     onPressed: () async{
-                      if (addpost.value.text.isNotEmpty) {
+
+                      //////////
+
+                      if (Address.isNotEmpty) {
+                        Position position = await _getGeoLocationPosition();
+                        location ='Lat: ${position.latitude} , Long: ${position.longitude}';
+                        GetAddressFromLatLong(position);
+                        setState(() {
+                          GetAddressFromLatLong(position);
+                        });
+                        /////
                         _saveUserDataToFirestore(addpost.text);
                         Navigator.push(context,
                         MaterialPageRoute(builder: (context) => PostListScreen()),

@@ -2,12 +2,13 @@ import 'package:balghny/model/post.dart';
 import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 //import 'dart:io';
 
 class PostListScreen extends StatefulWidget {
+  const PostListScreen({super.key});
+
   @override
   _PostListScreenState createState() => _PostListScreenState();
 }
@@ -19,6 +20,7 @@ class _PostListScreenState extends State<PostListScreen> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -32,6 +34,10 @@ class _PostListScreenState extends State<PostListScreen> {
   ];
 
   Widget currentScreen =  PostListScreen();
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,14 +112,12 @@ class _PostListScreenState extends State<PostListScreen> {
                                         borderRadius: BorderRadius.circular(50.0),
                                         child:
 
-                                        CircleAvatar(
-                                          backgroundImage: post.photourl != null && post.photourl!.isNotEmpty
-                                              ? NetworkImage(post.photourl!)
+                                        CircleAvatar(//post.photourl != null &&
+                                          backgroundImage: post.photourl.isNotEmpty
+                                              ? NetworkImage(post.photourl)
                                               : NetworkImage('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'),
                                         )
-
-                                        // Image.asset("assets/images/my.jpg",width: 35,height: 35,) ,
-                                        ),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -148,8 +152,51 @@ class _PostListScreenState extends State<PostListScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.all(5),
+                              child:
+                              Stack(
+                                children: [
+                                  Positioned(
+                                   // top: 0,
+                                  //  left: 0,
+                                    child: Text("Address: ",
+
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 60),
+                                    child: Text(
+                                      "${post.Address}",
+                                     // maxLines: 2,
+                                     //   overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            /*  Row(children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text("Address: ",
+
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Expanded(flex: 4,
+                                  child: Text(
+                                    "${post.Address}",
+                                   maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],),*/
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
                               child: Text(post.post_body),
                             ),
+
                             Center(
                               child: Container(
                                 width: 200,
