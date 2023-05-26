@@ -59,6 +59,9 @@ dependencies:
   wc_flutter_share: ^0.4.0
   share: ^2.0.1
 
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

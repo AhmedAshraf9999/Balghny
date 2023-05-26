@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Post {
   final String post_body;
@@ -6,13 +6,16 @@ class Post {
   final String username;
   final String photourl;
   var photocate;
+  final String Address;
+
  
   Post({
     required this.post_body, 
     required this.time,
     required this.username, 
     required this.photourl,
-    required this.photocate
+    required this.photocate,
+    required this.Address,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,7 @@ class Post {
       post_body: json['post_body'] ?? '',
       time: (json['time']).toDate(),
       username: json['username'] ?? '',
+      Address: json['Address'] ?? '',
       photourl: json['photourl'] ?? '',
       photocate: json['imageUrl'] ??'',
     );
@@ -32,8 +36,7 @@ class users {
   
  
   users({
-    required this.name, 
-    
+    required this.name,
     required this.photourl,
    
   });

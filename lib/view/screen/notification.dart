@@ -3,7 +3,6 @@ import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 import '../../model/post.dart';
 

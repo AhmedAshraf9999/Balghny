@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
@@ -68,7 +66,7 @@ class AboutPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
-                      children: [
+                      children: const [
                         Text("About Us ",
                             style: TextStyle(
                                 wordSpacing: 2,
@@ -79,7 +77,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Expanded(
                               child: Text(
                                   "Within the framework of Tire and Building Modern Egypt, represented by the Egyptian state,to support the level of road service and improve the quality of life and prosperity in Egyptian citiesTo respond to the aspirations and needs of generations to come and to achieve the residents' happiness and well-being",
