@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
-import 'notif.dart';
 //import 'dart:io';
 
 class PostListScreen extends StatefulWidget {
