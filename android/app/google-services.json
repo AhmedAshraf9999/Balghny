@@ -7,9 +7,6 @@
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
-        "mobilesdk_app_id": "1:210782971110:android:34913c17d46f6915818727",
-=======
         "mobilesdk_app_id": "1:210782971110:android:9c4f064fb1a2f0ec818727",
         "android_client_info": {
           "package_name": "com.example.balghny"
@@ -48,7 +45,6 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:210782971110:android:ab038bf150dbc4a6818727",
->>>>>>> 8446a5a5e532f12fd157d65958fd9e6a7e9f70b2
         "android_client_info": {
           "package_name": "com.example.balghny"
         }

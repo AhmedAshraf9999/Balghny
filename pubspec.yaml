@@ -2,7 +2,7 @@ name: balghny
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^2.0.12
   font_awesome_flutter: ^10.4.0
   share_plus: ^7.0.0
+  awesome_notifications: ^0.7.4+1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -53,7 +54,7 @@ dependencies:
   alert_dialog: ^1.0.0
   google_sign_in: ^6.0.2
   firebase_storage: ^11.1.0
-  flutter_facebook_auth: '^3.5.0'
+  flutter_facebook_auth: "^3.5.0"
   image_picker: ^0.8.7+4
   firebase_app_check: ^0.1.2+3
   wc_flutter_share: ^0.4.0
@@ -78,7 +79,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,9 +1,12 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:balghny/model/post.dart';
 import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
+
+import 'notif.dart';
 //import 'dart:io';
 
 class PostListScreen extends StatefulWidget {
@@ -18,13 +21,6 @@ class _PostListScreenState extends State<PostListScreen> {
   var myName = "";
   var myPhotoUrl; // add this variable to store the user's photo URL
 
-  @override
-  void initState() {
-
-    super.initState();
-  }
-
-
   int currentTab = 0;
   final List<Widget> screens = [
     ProfileScreen(),
@@ -33,17 +29,81 @@ class _PostListScreenState extends State<PostListScreen> {
     HomePage(),
   ];
 
-  Widget currentScreen =  PostListScreen();
+  int postCount = 1;
 
+  void addPostte() {
+    setState(() {
+      postCount++;
+      print('Posts: $postCount');
+    });
+  }
 
+  void initState() {
+    AwesomeNotifications().initialize(
+        null,
+        [
+          NotificationChannel(
+              channelKey: "Basic_channel",
+              channelName: "Basic Notification",
+              channelDescription: "Notification channel For Basic tests")
+        ],
+        debug: true);
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
 
+  triggerNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 10,
+          channelKey: "Basic_channel",
+          title: "simple Notification",
+          body: "This is a basic notification"),
+    );
+  }
+
+/*
+AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelKey: "Basic_channel",
+            channelName: "Basic Notification",
+            channelDescription: "Notification channel For Basic tests")
+      ],
+      debug: true);
+    void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
+  triggerNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(id: 10, channelKey: "Basic_channel",
+      title: "simple Notification", body: "This is a basic notification"),
+    );
+  }
+*/
+
+  Widget currentScreen = PostListScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Community',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          'Community',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -70,11 +130,14 @@ class _PostListScreenState extends State<PostListScreen> {
                 .map(
                     (doc) => Post.fromJson(doc.data()! as Map<String, dynamic>))
                 .toList();
-            return Container(margin: EdgeInsets.only(bottom: 20),
+            return Container(
+              margin: EdgeInsets.only(bottom: 20),
               child: ListView.separated(
-
-                separatorBuilder: (context,index){
-                  return Divider(color: Colors.grey[200],thickness: 20,);
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    color: Colors.grey[200],
+                    thickness: 20,
+                  );
                 },
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -91,11 +154,12 @@ class _PostListScreenState extends State<PostListScreen> {
                       sharePopupTitle: '',
                     );
                   }
+
                   return Wrap(
                     children: [
                       Container(
                         padding: EdgeInsets.all(7),
-                      //   height: 250,
+                        //   height: 250,
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -109,22 +173,24 @@ class _PostListScreenState extends State<PostListScreen> {
                                   child: Container(
                                     margin: EdgeInsets.only(left: 10),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(50.0),
-                                        child:
-
-                                        CircleAvatar(//post.photourl != null &&
-                                          backgroundImage: post.photourl.isNotEmpty
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        child: CircleAvatar(
+                                          //post.photourl != null &&
+                                          backgroundImage: post
+                                                  .photourl.isNotEmpty
                                               ? NetworkImage(post.photourl)
-                                              : NetworkImage('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'),
-                                        )
-                                    ),
+                                              : NetworkImage(
+                                                  'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'),
+                                        )),
                                   ),
                                 ),
                                 SizedBox(width: 10),
                                 Expanded(
                                   flex: 5,
                                   child: Container(
-                                    margin: EdgeInsets.only(right: 140,top: 10),
+                                    margin:
+                                        EdgeInsets.only(right: 140, top: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -136,15 +202,22 @@ class _PostListScreenState extends State<PostListScreen> {
                                               fontSize: 15),
                                         ),
                                         Text(post.time.toString(),
-                                            style: TextStyle(color: Colors.grey))
+                                            style:
+                                                TextStyle(color: Colors.grey))
                                       ],
                                     ),
                                   ),
                                 ),
                                 Expanded(
                                     child: IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.delete_forever,color: Colors.green,)))
+                                        onPressed: () {
+                                          addPostte();
+                                          triggerNotification();
+                                        },
+                                        icon: Icon(
+                                          Icons.delete_forever,
+                                          color: Colors.red,
+                                        )))
                               ],
                             ),
                             SizedBox(
@@ -152,14 +225,12 @@ class _PostListScreenState extends State<PostListScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.all(5),
-                              child:
-                              Stack(
+                              child: Stack(
                                 children: [
                                   Positioned(
-                                   // top: 0,
-                                  //  left: 0,
+                                    // top: 0,
+                                    //  left: 0,
                                     child: Text("Address: ",
-
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold)),
@@ -168,13 +239,13 @@ class _PostListScreenState extends State<PostListScreen> {
                                     margin: EdgeInsets.only(left: 60),
                                     child: Text(
                                       "${post.Address}",
-                                     // maxLines: 2,
-                                     //   overflow: TextOverflow.ellipsis,
+                                      // maxLines: 2,
+                                      //   overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],
                               ),
-                            /*  Row(children: [
+                              /*  Row(children: [
                                 Expanded(
                                   flex: 1,
                                   child: Text("Address: ",
@@ -196,11 +267,14 @@ class _PostListScreenState extends State<PostListScreen> {
                               padding: EdgeInsets.all(5),
                               child: Text(post.post_body),
                             ),
-
                             Center(
                               child: Container(
                                 width: 200,
-                                child: Image.network(post.photocate,fit: BoxFit.cover,height: 100,),
+                                child: Image.network(
+                                  post.photocate,
+                                  fit: BoxFit.cover,
+                                  height: 100,
+                                ),
                               ),
                             ),
                             Center(
@@ -209,6 +283,7 @@ class _PostListScreenState extends State<PostListScreen> {
                                     onPressed: () async {
                                       _shareContent(context);
                                       print("object");
+                                      addPostte();
                                     },
                                     child: Text("Facebook Share",
                                         style: TextStyle(
@@ -260,35 +335,52 @@ class _PostListScreenState extends State<PostListScreen> {
                   Navigator.of(context).pushNamed("post");
                 },
                 icon: Icon(Icons.groups,
-                    color: currentTab == 2
-                        ? Colors.green
-                        : Colors.black),
+                    color: currentTab == 2 ? Colors.green : Colors.black),
               ),
               SizedBox(
                 width: 10,
               ),
               IconButton(
                 onPressed: () {
-                   Navigator.of(context).pushNamed("notification");
-
-
-
+                  Navigator.of(context).pushNamed("notification");
                 },
-                icon: Icon(Icons.notifications_active,
-                    color: currentTab == 4
-                        ? Colors.green
-                        : Colors.black),
+                icon: Stack(
+                  children: [
+                    Icon(Icons.notifications),
+                    postCount > 0
+                        ? Positioned(
+                            right: 0,
+                            child: Container(
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              constraints: BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              child: Text(
+                                postCount.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
               ),
 
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed("profile");
-
                 },
                 icon: Icon(Icons.person,
-                    color: currentTab == 5
-                        ? Colors.green
-                        : Colors.black),
+                    color: currentTab == 5 ? Colors.green : Colors.black),
               ),
             ],
           ),
