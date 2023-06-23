@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -8,6 +9,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+
+
 
 class Add_post extends StatefulWidget {
   final File img;
@@ -61,6 +67,7 @@ class _Add_postState extends State<Add_post> {
   TextEditingController addpost = TextEditingController();
   bool isloading = false;
   var img_url;
+  String title = "";
 
   //////////location fun
   Future<Position> _getGeoLocationPosition() async {
@@ -141,6 +148,64 @@ class _Add_postState extends State<Add_post> {
     }
   }
 
+  /////
+ /* Future sendEmail() async {
+    final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+    const serviceId = "service_rtzlfks";
+    const templateId = "template_9jlt5jn";
+    const userId = "user_bV7vYISBi5wNl1wbX";
+    final response = await http.post(url,
+    headers: {'Content-Type': ' application/json'},
+      body: json.encode({
+        "service_id": serviceId,
+        "template_Id": templateId,
+        "user_Id": userId,
+        "template_params":{
+          "title":title,
+          "addpost":addpost.text,
+          "address":Address,
+        }
+      })
+    );
+
+    print(addpost.text);
+    return response.statusCode;
+  }*/
+
+  Future sendEmail({
+    required String name,
+    required String email,
+    required String subject,
+    required String message}) async {
+    const serviceId = "service_rtzlfks";
+    const templateId = "template_9jlt5jn";
+    const userId = "user_bV7vYISBi5wNl1wbX";
+
+
+
+
+
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+
+    final response = await http.post(url,
+        headers: {'Content-Type': ' application/json'},
+        body: json.encode({
+          "service_id": serviceId,
+          "template_Id": templateId,
+          "user_Id": userId,
+          "template_params":{
+            "user_name":name,
+            "user_email":email,
+            "user_subject":subject,
+            "user_message":message,
+          }
+        })
+    );
+
+    //print(addpost.text);
+    //return response.statusCode;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,7 +257,7 @@ class _Add_postState extends State<Add_post> {
                     child: Container(
                         margin: EdgeInsets.only(left: 30, top: 5),
 //"Fire-Disaster"
-                        child: Text('${Address}',
+                        child: Text('${title}',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold))),
                   ),
@@ -239,7 +304,9 @@ class _Add_postState extends State<Add_post> {
                         )
                       : ElevatedButton(
                           onPressed: () async {
-                            addPostte();
+                         //   sendEmail(name: "Ahmed",email: "ahmed@gamil.com",subject: "hello",message: "hhhhhhhhhh");
+
+                         addPostte();
                             triggerNotification();
                             //////////
 

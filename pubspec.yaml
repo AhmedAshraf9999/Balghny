@@ -54,7 +54,7 @@ dependencies:
   alert_dialog: ^1.0.0
   google_sign_in: ^6.0.2
   firebase_storage: ^11.1.0
-  flutter_facebook_auth: "^3.5.0"
+  flutter_facebook_auth: ^3.5.0
   image_picker: ^0.8.7+4
   firebase_app_check: ^0.1.2+3
   wc_flutter_share: ^0.4.0
@@ -62,6 +62,8 @@ dependencies:
 
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
