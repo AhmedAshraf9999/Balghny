@@ -6,13 +6,16 @@ import 'package:balghny/view/screen/com.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:mailer/smtp_server.dart';
 
 
 class Add_post extends StatefulWidget {
@@ -172,7 +175,7 @@ class _Add_postState extends State<Add_post> {
     return response.statusCode;
   }*/
 
-  Future sendEmail({
+ /* Future sendEmail({
     required String name,
     required String email,
     required String subject,
@@ -180,10 +183,6 @@ class _Add_postState extends State<Add_post> {
     const serviceId = "service_rtzlfks";
     const templateId = "template_9jlt5jn";
     const userId = "user_bV7vYISBi5wNl1wbX";
-
-
-
-
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
 
@@ -204,7 +203,95 @@ class _Add_postState extends State<Add_post> {
 
     //print(addpost.text);
     //return response.statusCode;
+  }*/
+
+
+  Future<void> sendEmail({
+    required String email,
+    required String mailMessage,
+  }) async {
+    String username = 'ahmedashraf1021999@gmail.com';
+    String password = 'tmwerdrkxnzmcpeg';
+
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = 'ahmedashraf1021999@gmail.com'
+      ..recipients.add(email)
+      ..subject = 'Mail'
+      ..text = 'Message: $mailMessage';
+
+
+    try {
+      await send(message, smtpServer);
+
+      // Display a Snackbar or toast message here to indicate successful email sending.
+      // This will vary depending on the framework you are using.
+      // Example using Flutter's ScaffoldMessenger:
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email sent successfully.'),
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
   }
+
+
+  /* Future sendEmail({
+  //  required String name,
+    required String email,
+    //required String subject,
+    required String mailMessage
+
+  }) async {
+
+    String username = 'ahmedashraf1021999@gmail.com';
+    String password = 'tmwerdrkxnzmcpeg';
+    final smtpServer = gmail(username, password);
+    final message = Message()
+    ..from = Address//(username,'Mail Service')
+    ..recipients.add(email)
+    ..subject = 'Mail '
+    ..text = 'Message: $mailMessage';
+
+    try{
+      await send(message, smtpServer);
+      Center(
+        child: ShowSnackBarExample(),
+      );
+
+      }catch(e){
+      if(kDebugMode){
+        print(e.toString());
+      }
+    }
+
+
+  /*  const serviceId = "service_rtzlfks";
+   const templateId = "template_9jlt5jn";
+    const userId = "user_bV7vYISBi5wNl1wbX";
+
+   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+
+    final response = await http.post(url,
+        headers: {'Content-Type': ' application/json'},
+        body: json.encode({
+          "service_id": serviceId,
+          "template_Id": templateId,
+          "user_Id": userId,
+          "template_params":{
+            "user_name":name,
+            "user_email":email,
+            "user_subject":subject,
+            "user_message":message,
+          }
+        })
+    );*/
+
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -305,8 +392,8 @@ class _Add_postState extends State<Add_post> {
                       : ElevatedButton(
                           onPressed: () async {
                          //   sendEmail(name: "Ahmed",email: "ahmed@gamil.com",subject: "hello",message: "hhhhhhhhhh");
-
-                         addPostte();
+                            sendEmail( email: 'ahmedashraf1021999@gmail.com', mailMessage: 'Disaster');
+                      /*   addPostte();
                             triggerNotification();
                             //////////
 
@@ -326,7 +413,7 @@ class _Add_postState extends State<Add_post> {
                                 MaterialPageRoute(
                                     builder: (context) => PostListScreen()),
                               );
-                            }
+                            }*/
                           },
                           style: ButtonStyle(
                               backgroundColor:
@@ -347,6 +434,24 @@ class _Add_postState extends State<Add_post> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ShowSnackBarExample extends StatelessWidget {
+  const ShowSnackBarExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email is send succ.'),
+          ),
+        );
+      },
+      child: const Text('Show SnackBar'),
     );
   }
 }

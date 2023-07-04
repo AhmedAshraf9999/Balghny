@@ -207,7 +207,17 @@ class _Cam_FireState extends State<Cam_Fire> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        if(result == "Fire-Disaster" || result != "Non Damage"){
+
+                        if(_image1 == null){
+                          AlertDialog alert = AlertDialog(
+                            title: Text("NO Image"),
+                            content: Text("You should pic Image."),
+                            actions: [
+
+                            ],
+                          );
+                        } else{
+                        if(result == "Fire-Disaster"){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -236,7 +246,7 @@ class _Cam_FireState extends State<Cam_Fire> {
 
 
 
-                        }
+                        }}
                         
 
                       },
