@@ -1,5 +1,6 @@
 
 
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ContactUs extends StatelessWidget {
@@ -71,10 +72,10 @@ class ContactUs extends StatelessWidget {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children:  [
                             Expanded(
                               child: Text(
-                                "CONTACT US",
+                                AppLocalizations.of(context)!.contact_us,
                                 style:
                                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                               ),
@@ -96,7 +97,7 @@ class ContactUs extends StatelessWidget {
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children:  [
                               Icon(
                                 Icons.location_on_outlined,
                                 color: Colors.green,
@@ -107,7 +108,7 @@ class ContactUs extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  "Macrm Ebaid , Nacer city .",
+                                  AppLocalizations.of(context)!.loc_city,
                                   style:
                                       TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                 ),

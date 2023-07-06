@@ -1,3 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AccordionPage extends StatefulWidget {
@@ -6,9 +9,11 @@ class AccordionPage extends StatefulWidget {
 }
 
 class _AccordionPageState extends State<AccordionPage> {
+
+  // var q_one=AppLocalizations.of(context)!.q_one;
   List<Map<String, dynamic>> _items = [
     {
-      'title': 'what is BaL3ny ?',
+      'title': "what is BL3'ny ?",
       'description':
           'It is an application that helps in reaching the places of accidents, broken roads, and streets that have broken lights, and sends them to the competent authorities to solve the problem.',
     },
@@ -71,11 +76,14 @@ class _AccordionPageState extends State<AccordionPage> {
                 ],),
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
-              Text("FAQ ",
+              Text(AppLocalizations.of(context)!.faqs,
                   style: TextStyle(
                       wordSpacing: 2, fontSize: 30, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: Container(
                   width: 400,

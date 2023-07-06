@@ -1,0 +1,135 @@
+
+{
+  "login_masg" : "Login to your account ",
+  "@login_masg" : {},
+
+  "valide_masg" : "can not be large than 50",
+  "@valide_masg" : {},
+
+  "validp_masg" : "can not be small then 2",
+  "@validp_masg" : {},
+
+  "hint_text": "Enter your email here",
+  "labeltext": "Email",
+
+
+  
+  "hintp_text": "Enter your password here",
+  "@hintp_text" : {},
+
+
+ "forget_password": "Forget Password?",
+  "@forget_password" : {},
+
+ "sign_in": "sign in",
+ "or_sign_in": "Or Sign in with",
+ "success_sign_in": "Sign in success",
+ "error_sign_in": "Error signing in.",
+ "dont_account": "     Don't have an account?",
+ "sign_up": "Sign up",
+ "sign_up_msg": "Create Your Account",
+
+  "hintun_text": "Enter your name here",
+  "labeluntext": "User Name",
+
+  "hintcp_text": "Confirm Password here",
+  "labelcptext": "Confirm Password",
+
+ "or_sign_up": "Or Sign up with",
+ "have_account": "     Already have an account?",
+
+
+ "home_msg": "Choose your report",
+ "categories": "Categories",
+ "water_disaster": "Water Disasters",
+ "fire_disaster": "Fire Disasters",
+ "infrastructure_disaster": "infrastructure Disasters",
+ "car_accidents":"Cars Accidents ",
+ "new_category": "New Category",
+
+  "my_profile": "My Profile",
+  "homepage": "HomePage",
+  "about_us": "About Us",
+  "emergency": "Emergency numbers",
+  "hospitals": "Hospitals numbers",
+  "contact_us": "Contact Us",
+  "helps_faqs": "Helps & FAQs",
+  "log_out": "Log Out",
+
+  "name": "Name:  ",
+  "phone": "Phone: ",
+  "email": "Email",
+  "city": "City:   ",
+  "your_phone": "Your Phone Number",
+  "edit_profile": "Edit Profile",
+  "save": "Save",
+
+  "about_msg": " The app uses machine learning to analyze photos from a mobile device's camera for signs of disaster, such as smoke or flooding. It provides real-time alerts to users in affected areas to help them evacuate safely and quickly. The app's primary goal is to enable swift response and reduce the damage caused by disasters. It aims to bridge the gap between affected communities and the necessary resources, providing a comprehensive solution for disaster response and relief efforts. ",
+
+
+  "emergencyy": "Emergency",
+  "phone_number": "Phone Numbers",
+  "police": "Police",
+  "traffic_police": "Traffic Police",
+  "fire_department": "Fire Department",
+  "ambulance": "Ambulance",
+  "highway_emergency": "Highway Emergency",
+  "erc": "Egyptian Red Crescent",
+  "public_services": "Public Services",
+  "electricity": "Electricity",
+  "eeaa": "Egyptian Environmental Affairs Agency",
+  "naturalgas": "Natural Gas",
+  "meteorological": "Meteorological Authority",
+
+
+  "ain_shams": "Ain Shams Specialized",
+  "akf": "Abdel Kader Fahmy",
+  "slam": "Al Salam",
+  "hussein": "Al Hussein University",
+  "badran": "Badran",
+  "dar_fouad": "Dar Al Fouad",
+  "dar_shefaa": "Dar Ai Shefaa",
+  "elagouza": "El Agouza",
+  "eldemerdash": "Eldemerdash",
+  "heluopls": "Heliopolis",
+
+
+  "loc_city": "Macrm Ebaid , Nacer city .",
+  
+  
+  "faqs": "FAQs",
+  "q_one": "what is BL3'ny ?",
+
+  "notification": "Notification",
+
+  "upload_post": "Upload Post In Community",
+
+  "address": "Address: ",
+  "community": "Community ",
+  "share": "Facebook Share ",
+
+
+  "image_picker": "Image Picker",
+  "image_show": "Image should appear here",
+  "capture_image": "Capture Image",
+  "send": "Send",
+
+  "new_post": "Create New Post",
+  "title": "Title",
+  "description": "Description",
+  "post": "Post",
+
+
+
+
+
+  "labelptext": "Password",
+  "@labelptext" : {
+    
+  }
+
+}
+
+
+
+

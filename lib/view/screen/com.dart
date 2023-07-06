@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:balghny/model/post.dart';
 import 'package:balghny/view/screen/home_page.dart';
 import 'package:balghny/view/screen/profile.dart';
@@ -99,8 +100,8 @@ AwesomeNotifications().initialize(
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text(
-          'Community',
+        title:  Text(
+          AppLocalizations.of(context)!.community,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -186,10 +187,10 @@ AwesomeNotifications().initialize(
                                 ),
                                 SizedBox(width: 10),
                                 Expanded(
-                                  flex: 5,
+                                  flex: 8,
                                   child: Container(
                                     margin:
-                                        EdgeInsets.only(right: 140, top: 10),
+                                        EdgeInsets.only(right: 10, top: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -224,25 +225,25 @@ AwesomeNotifications().initialize(
                             ),
                             Container(
                               padding: EdgeInsets.all(5),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    // top: 0,
-                                    //  left: 0,
-                                    child: Text("Address: ",
+                              child: Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        AppLocalizations.of(context)!.address,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold)),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 60),
-                                    child: Text(
-                                      "${post.Address}",
-                                      // maxLines: 2,
-                                      //   overflow: TextOverflow.ellipsis,
+                                            
+                                    Container(
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        "${post.Address}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               /*  Row(children: [
                                 Expanded(
@@ -272,7 +273,7 @@ AwesomeNotifications().initialize(
                                 child: Image.network(
                                   post.photocate,
                                   fit: BoxFit.cover,
-                                  height: 100,
+                                  height: 150,
                                 ),
                               ),
                             ),
@@ -284,7 +285,7 @@ AwesomeNotifications().initialize(
                                       print("object");
                                       addPostte();
                                     },
-                                    child: Text("Facebook Share",
+                                    child: Text(AppLocalizations.of(context)!.share,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold))),

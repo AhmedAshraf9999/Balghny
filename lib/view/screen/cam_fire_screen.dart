@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:balghny/view/screen/add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -138,7 +139,7 @@ class _Cam_FireState extends State<Cam_Fire> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image Picker'),
+        title:  Text(AppLocalizations.of(context)!.image_picker),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -183,8 +184,8 @@ class _Cam_FireState extends State<Cam_Fire> {
                   border: Border.all(width: 8, color: Colors.black12),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: const Text(
-                  'Image should appear here',
+                child:  Text(
+                  AppLocalizations.of(context)!.image_show,
                   style: TextStyle(fontSize: 26),
                 ),
               ),
@@ -200,7 +201,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                         getImage1();
                        // uploadFile(_image1!);
                       },
-                      child: const Text('Capture Image',
+                      child:  Text(AppLocalizations.of(context)!.capture_image,
                           style: TextStyle(fontSize: 18))),
                 ),
                 SizedBox(width: 20,),
@@ -250,7 +251,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                         
 
                       },
-                      child: const Text('Send',
+                      child:  Text(AppLocalizations.of(context)!.send,
                           style: TextStyle(fontSize: 18))
                           
                           ),

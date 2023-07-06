@@ -1,5 +1,6 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +171,7 @@ var password = TextEditingController() ,
                   ],),
                 ],
               ),
-              Text("Create Your Account",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              Text(AppLocalizations.of(context)!.sign_up_msg,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
               SizedBox(height: 15,),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
@@ -191,8 +192,8 @@ var password = TextEditingController() ,
                             },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Enter your name here',
-                        labelText: 'User Name',
+                        hintText: AppLocalizations.of(context)!.hintun_text,
+                        labelText: AppLocalizations.of(context)!.labeluntext,
                         prefixIcon: Icon(Icons.person),
                       ),
                     ),
@@ -211,8 +212,8 @@ var password = TextEditingController() ,
                             controller: emailAddress,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Enter your email here',
-                            labelText: 'Email',
+                            hintText: AppLocalizations.of(context)!.hint_text,
+                            labelText: AppLocalizations.of(context)!.labeltext,
                           prefixIcon: Icon(Icons.email),
                         ),
                       ),
@@ -233,8 +234,8 @@ var password = TextEditingController() ,
                       // obscureText: true,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Enter your password here',
-                            labelText: 'Password',
+                            hintText: AppLocalizations.of(context)!.hintp_text,
+                            labelText: AppLocalizations.of(context)!.labelptext,
                             suffixIcon: IconButton(
                               icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
                               onPressed: (){
@@ -263,8 +264,8 @@ var password = TextEditingController() ,
                        // obscureText: true,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Confirm Password here',
-                            labelText: 'Confirm Password',
+                            hintText: AppLocalizations.of(context)!.hintcp_text,
+                            labelText: AppLocalizations.of(context)!.labelptext,
                             suffixIcon: IconButton(
                               icon: Icon(_obscureText1 ? Icons.visibility : Icons.visibility_off),
                               onPressed: (){
@@ -306,7 +307,7 @@ var password = TextEditingController() ,
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)))),
                             child: Text(
-                              'Sign up',
+                              AppLocalizations.of(context)!.sign_in,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white),
@@ -320,7 +321,7 @@ var password = TextEditingController() ,
             ),
             SizedBox(height: 10,),
             Row(children: [
-              Expanded(child:  Center(child: Text("Or Sign up with",style: TextStyle(color: Colors.grey),)))
+              Expanded(child:  Center(child: Text(AppLocalizations.of(context)!.or_sign_up,style: TextStyle(color: Colors.grey),)))
             ],),
             SizedBox(height: 6,),
             Row(children: [
@@ -334,12 +335,12 @@ var password = TextEditingController() ,
                       await signInWithGoogle();
                       Navigator.of(context).pushReplacementNamed('home');
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Sign in success!')),
+                        SnackBar(content: Text(AppLocalizations.of(context)!.success_sign_in)),
 
                       );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error signing in.')),
+                        SnackBar(content: Text(AppLocalizations.of(context)!.success_sign_in)),
                       );
 
                     }
@@ -366,12 +367,12 @@ var password = TextEditingController() ,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text("     Already have an account?",style: TextStyle(fontSize: 15),),
+              Text(AppLocalizations.of(context)!.have_account,style: TextStyle(fontSize: 15),),
               SizedBox(width: 5,),
               InkWell( onTap: (){
                 Navigator.of(context).pushNamed("login");
               },
-                  child: Text("Sign in",style: TextStyle(color: Colors.green,fontSize: 15),))
+                  child: Text(AppLocalizations.of(context)!.sign_in,style: TextStyle(color: Colors.green,fontSize: 15),))
             ],),
 
           ],),),

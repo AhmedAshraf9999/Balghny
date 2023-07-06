@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:balghny/view/screen/EditProfileScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
@@ -87,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text("My Profile"),
+      title: Text(AppLocalizations.of(context)!.my_profile),
       centerTitle: true,
       backgroundColor: Colors.green,
       leading: IconButton(onPressed: (){
@@ -150,7 +151,7 @@ Widget build(BuildContext context) {
                       children: [
 
                         Text(
-                          "Name:  ",
+                          AppLocalizations.of(context)!.name,
                           style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 22,
@@ -174,7 +175,7 @@ Widget build(BuildContext context) {
                     child: Row(
                       children: [
                         Text(
-                            "Phone: ",
+                            AppLocalizations.of(context)!.phone,
                             style: TextStyle(
                                 color: Colors.grey[500],
                                 fontSize: 22,
@@ -196,11 +197,11 @@ Widget build(BuildContext context) {
                   SizedBox(
                     height: 20,
                   ),
-                    Container(margin: EdgeInsets.only(left: 20),
+                    Container(margin: EdgeInsets.only(left: 0),
                       child: Row(
                         children: [
                           Text(
-                            "Email:  ",
+                            AppLocalizations.of(context)!.email,
                             style: TextStyle(
                                 color: Colors.grey[500],
                                 fontSize: 22,
@@ -228,7 +229,7 @@ Widget build(BuildContext context) {
                       child: Row(
                         children: [
                           Text(
-                            "City:     ",
+                            AppLocalizations.of(context)!.city,
                             style: TextStyle(
                                 color: Colors.grey[500],
                                 fontSize: 22,
@@ -253,7 +254,7 @@ Widget build(BuildContext context) {
 
               ],
             ),
-            SizedBox(height: 80,),
+            SizedBox(height: 40,),
             Row(
               
               mainAxisAlignment: MainAxisAlignment.end,

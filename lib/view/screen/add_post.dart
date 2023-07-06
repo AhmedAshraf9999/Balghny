@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:balghny/view/screen/com.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -302,7 +303,7 @@ class _Add_postState extends State<Add_post> {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back)),
-        title: Text('Create New Post'),
+        title: Text(AppLocalizations.of(context)!.new_post),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -332,7 +333,7 @@ class _Add_postState extends State<Add_post> {
                       Container(
                           margin: EdgeInsets.only(left: 20),
                           child: Text(
-                            "Title",
+                            AppLocalizations.of(context)!.title,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           )),
@@ -359,7 +360,7 @@ class _Add_postState extends State<Add_post> {
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: 20),
-                          child: Text("Description",
+                          child: Text(AppLocalizations.of(context)!.description,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold))),
                     ],
@@ -424,7 +425,7 @@ class _Add_postState extends State<Add_post> {
                                       borderRadius:
                                           BorderRadius.circular(10)))),
                           child: Text(
-                            'Post',
+                            AppLocalizations.of(context)!.post,
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,9 @@ try {
                   ],
                 ),
                 SizedBox(height: 20,),
-                Container(child: Text("Login to your account",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),),
+                Container(child: Text( 
+                  AppLocalizations.of(context)!.login_masg,
+                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),),
                 SizedBox(height: 20,),
           
           
@@ -182,7 +185,7 @@ try {
                         controller: emailAddress,
                               validator: (val) {
                                 if (val!.length > 50) {
-                                  return ("can not to be large then 50");                              
+                                  return ("can not be large than 50");                              
                                 }
                                 if (val.length < 2){
                                   return("can not to be small then 2");
@@ -190,8 +193,8 @@ try {
                               },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Enter your email here',
-                          labelText: 'Email',
+                          hintText: AppLocalizations.of(context)!.hint_text,
+                          labelText: AppLocalizations.of(context)!.labeltext,
                           prefixIcon: Icon(Icons.email),
                         ),
                       ),
@@ -211,8 +214,8 @@ try {
                               },
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Enter your password here',
-                            labelText: 'Password',
+                                          hintText: AppLocalizations.of(context)!.hintp_text,
+                            labelText: AppLocalizations.of(context)!.labelptext,
                             suffixIcon: IconButton(
                               icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
                               onPressed: (){
@@ -246,7 +249,7 @@ try {
 
                      InkWell(
                          onTap: (){},
-                         child: Text("Forget Password?",style: TextStyle(color: Colors.red)))
+                         child: Text(AppLocalizations.of(context)!.forget_password,style: TextStyle(color: Colors.red)))
                    ],)
 
           
@@ -272,7 +275,7 @@ try {
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)))),
                             child: Text(
-                              'sign in',
+                              AppLocalizations.of(context)!.sign_in,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white),
@@ -285,7 +288,7 @@ try {
                   ),
                   SizedBox(height: 10,),
                   Row(children: [
-                    Expanded(child:  Center(child: Text("Or Sign in with",style: TextStyle(color: Colors.grey),)))
+                    Expanded(child:  Center(child: Text(AppLocalizations.of(context)!.or_sign_in,style: TextStyle(color: Colors.grey),)))
                   ],),
                   SizedBox(height: 10,),
                   Row(children: [
@@ -299,12 +302,12 @@ try {
                               await signInWithGoogle();
                               Navigator.of(context).pushReplacementNamed('home');
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Sign in success!')),
+                                SnackBar(content: Text(AppLocalizations.of(context)!.success_sign_in)),
 
                               );
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error signing in.')),
+                                SnackBar(content: Text(AppLocalizations.of(context)!.error_sign_in)),
                               );
 
                             }
@@ -331,13 +334,13 @@ try {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("     Don't have an account?",style: TextStyle(fontSize: 15)),
+                      Text(AppLocalizations.of(context)!.dont_account,style: TextStyle(fontSize: 15)),
                       SizedBox(width: 5,),
                       InkWell(
                           onTap: (){
                             Navigator.of(context).pushNamed("register");
                           },
-                          child: Text("Sign up",style: TextStyle(color: Colors.green,fontSize: 15),))
+                          child: Text(AppLocalizations.of(context)!.sign_up,style: TextStyle(color: Colors.green,fontSize: 15),))
                     ],),
                   SizedBox(height: 20,),
           

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:balghny/l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -74,7 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: Text(AppLocalizations.of(context)!.edit_profile),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: IconButton(
@@ -139,7 +140,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 16),
                 TextFormField(
                   initialValue: myName,
-                  decoration: InputDecoration(labelText: 'Name',border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name,border: OutlineInputBorder()),
                   onChanged: (value) {
                     setState(() {
                       myName = value;
@@ -149,7 +150,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 16),
                 TextFormField(
                   initialValue: myPhoneNumber,
-                  decoration: InputDecoration(labelText: 'Your Phone Number',border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.your_phone,border: OutlineInputBorder()),
                   onChanged: (value) {
                     setState(() {
                       myPhoneNumber = value;
@@ -160,7 +161,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 16),
                 TextFormField(
                   initialValue: myCity,
-                  decoration: InputDecoration(labelText: 'City',border: OutlineInputBorder(),),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.city,border: OutlineInputBorder(),),
 
                   onChanged: (value) {
                     setState(() {
@@ -177,7 +178,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         _editProfileData();
                       }
                     },
-                    child: Text('Save'),
+                    child: Text(AppLocalizations.of(context)!.save,
+),
                   ),
                 ),
               ],
