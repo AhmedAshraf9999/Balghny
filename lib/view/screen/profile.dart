@@ -210,12 +210,14 @@ Widget build(BuildContext context) {
 
                           SizedBox(width: 10,),
 
-                          Text(
-                            myEmail ?? "karim@",
-                            style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              myEmail ?? "karim@",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
                       ),

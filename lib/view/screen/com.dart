@@ -234,12 +234,14 @@ AwesomeNotifications().initialize(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold)),
                                             
-                                    Container(
-                                      margin: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "${post.Address}",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          "${post.Address}",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ),
                                   ],
