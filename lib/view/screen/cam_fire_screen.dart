@@ -133,7 +133,7 @@ class _Cam_FireState extends State<Cam_Fire> {
       image;
       objects;
       result;
-      
+
       print(result);
     });
   }
