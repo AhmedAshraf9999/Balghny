@@ -212,7 +212,7 @@ class _Cam3State extends State<Cam3> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!),
+                              builder: (context) => Add_post(img: _image1!,title: "Infrastructure Disaster"),
                             ),
                           );
                         }

@@ -208,7 +208,7 @@ class _Cam2State extends State<Cam2> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        if(result == "Fire-Disaster" || result != "Non Damage"){
+                    /*    if(result == "Fire-Disaster" || result != "Non Damage"){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -237,7 +237,7 @@ class _Cam2State extends State<Cam2> {
 
 
 
-                        }
+                        }*/
 
 
                       },

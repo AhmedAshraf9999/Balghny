@@ -21,7 +21,8 @@ import 'package:mailer/smtp_server.dart';
 
 class Add_post extends StatefulWidget {
   final File img;
-  const Add_post({Key? key, required this.img}) : super(key: key);
+  final String title;
+  const Add_post({Key? key, required this.img, required this.title}) : super(key: key); //, required this.title
 
   @override
   State<Add_post> createState() => _Add_postState();
@@ -345,7 +346,7 @@ class _Add_postState extends State<Add_post> {
                     child: Container(
                         margin: EdgeInsets.only(left: 30, top: 5),
 //"Fire-Disaster"
-                        child: Text('${title}',
+                        child: Text(widget.title,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold))),
                   ),
@@ -393,8 +394,8 @@ class _Add_postState extends State<Add_post> {
                       : ElevatedButton(
                           onPressed: () async {
                          //   sendEmail(name: "Ahmed",email: "ahmed@gamil.com",subject: "hello",message: "hhhhhhhhhh");
-                            sendEmail( email: 'ahmedashraf1021999@gmail.com', mailMessage: 'Disaster');
-                      /*   addPostte();
+                            sendEmail( email: 'bal8ny@gmail.com', mailMessage:widget.title);
+                         addPostte();
                             triggerNotification();
                             //////////
 
@@ -414,7 +415,7 @@ class _Add_postState extends State<Add_post> {
                                 MaterialPageRoute(
                                     builder: (context) => PostListScreen()),
                               );
-                            }*/
+                            }
                           },
                           style: ButtonStyle(
                               backgroundColor:
