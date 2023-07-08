@@ -23,10 +23,12 @@ class _Cam_FireState extends State<Cam_Fire> {
   //var myPhotoUrl = "";
   var img_url;
   String result = "";
+
+
   File? _image1;
   var image ;
- // String? _imagepath;
- // String i = "assets/images/my.jpg";
+  // String? _imagepath;
+  // String i = "assets/images/my.jpg";
   late ImagePicker imagePicker;
 
   //TODO declare detector
@@ -41,7 +43,7 @@ class _Cam_FireState extends State<Cam_Fire> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
-    
+
     //TODO initialize detector
     createObjectDetection();
   }
@@ -58,32 +60,32 @@ class _Cam_FireState extends State<Cam_Fire> {
 
 
   //TODO capture image using camera
- // late File _image1;
+  // late File _image1;
   final picker = ImagePicker();
   Future<void> getImage1() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera
-    ,   maxWidth: 640,
-       maxHeight: 480,
+        ,   maxWidth: 640,
+        maxHeight: 480,
         imageQuality: 80 //0 - 100
 
     );
 
     if (pickedFile != null) {
-      var imagename = basename(pickedFile.path) ;      
+      var imagename = basename(pickedFile.path) ;
       setState(() {
         _image1 = File(pickedFile.path);
         doObjectDetection();
       });
     }
     else {
-        print('No image selected.');
-      }
+      print('No image selected.');
+    }
 
 
 
   }
 
-  
+
 
 
   //TODO face detection code here
@@ -110,7 +112,7 @@ class _Cam_FireState extends State<Cam_Fire> {
     final options = LocalObjectDetectorOptions(
         modelPath: modelPath,
         classifyObjects: true,
-        multipleObjects: true,
+        multipleObjects: false,
         mode: DetectionMode.single);
     objectDetector = ObjectDetector(options: options);
   }
@@ -131,6 +133,7 @@ class _Cam_FireState extends State<Cam_Fire> {
       image;
       objects;
       result;
+
       print(result);
     });
   }
@@ -150,7 +153,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                 ? Container(
                 width: 640,
                 height: 480,
-              //  height: 300,
+                //  height: 300,
                 margin: const EdgeInsets.only(
                   top: 45,
                 ),
@@ -161,7 +164,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                   border: Border.all(width: 8, color: Colors.black),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: 
+                child:
                 Center(
                   child: FittedBox(
                     child: SizedBox(
@@ -199,7 +202,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                   child: ElevatedButton(
                       onPressed: () {
                         getImage1();
-                       // uploadFile(_image1!);
+                        // uploadFile(_image1!);
                       },
                       child:  Text(AppLocalizations.of(context)!.capture_image,
                           style: TextStyle(fontSize: 18))),
@@ -209,25 +212,32 @@ class _Cam_FireState extends State<Cam_Fire> {
                   child: ElevatedButton(
                       onPressed: () {
 
-                        if(_image1 == null){
-                          AlertDialog alert = AlertDialog(
-                            title: Text("NO Image"),
-                            content: Text("You should pic Image."),
-                            actions: [
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
+                          ),
+                        );
 
-                            ],
-                          );
-                        } else{
-                        if(result == "Fire-Disaster"){
+
+                        /* if(result == "Fire-Disaster"){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!),
+                              builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
+                            ),
+                          );
+                        }
+                      else if(result == "Fire-Disaster" && result == "Non Damage"){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
                             ),
                           );
                         }
 
-                      else{
+                        else{
 
                           AlertDialog alert = AlertDialog(
                             title: Text("Fake Image"),
@@ -247,14 +257,24 @@ class _Cam_FireState extends State<Cam_Fire> {
 
 
 
-                        }}
-                        
+                        }*/
+                        /*  if(_image1 == null){
+                          AlertDialog alert = AlertDialog(
+                            title: Text("NO Image"),
+                            content: Text("You should pic Image."),
+                            actions: [
+
+                            ],
+                          );
+                        } else{
+                       }*/
+
 
                       },
                       child:  Text(AppLocalizations.of(context)!.send,
                           style: TextStyle(fontSize: 18))
-                          
-                          ),
+
+                  ),
                 ),
 
               ],
