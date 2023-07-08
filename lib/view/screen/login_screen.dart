@@ -162,7 +162,7 @@ try {
                     Stack(children: [
                       Container(child: Image.asset('assets/images/111.png',width: 120,height: 125,)),
                       Container(
-                          margin: EdgeInsets.only(left: 2,top: 3),
+                          margin: EdgeInsets.only(left: 2,top: 0),
                           child: Image.asset('assets/images/22.png',width: 110,height: 110,)),
                     ],),
           
@@ -185,10 +185,10 @@ try {
                         controller: emailAddress,
                               validator: (val) {
                                 if (val!.length > 50) {
-                                  return ("can not be large than 50");                              
+                                  return ("can not be large than 50");
                                 }
                                 if (val.length < 2){
-                                  return("can not to be small then 2");
+                                  return("please enter your e-mail address");
                                 }
                               },
                         decoration: InputDecoration(
@@ -206,10 +206,10 @@ try {
                         controller: mypassword,
                               validator: (val) {
                                 if (val!.length > 50) {
-                                  return ("can not to be large then 50");                              
+                                  return ("can not to be large than 50");
                                 }
                                 if (val.length < 4){
-                                  return("can not to be small then 4 ");
+                                  return("please enter your password! ");
                                 }
                               },
                         decoration: InputDecoration(
@@ -224,7 +224,7 @@ try {
                                 });
                               },
                             )
-          
+
                         ),
                       ),
                     ),
@@ -356,8 +356,8 @@ try {
                           margin: EdgeInsets.only(left: 10,top: 15),
                           child: Image.asset('assets/images/44.png',width: 110,height: 110,)),
                     ],),
-          
-          
+
+
                   ],
                 ),
           
