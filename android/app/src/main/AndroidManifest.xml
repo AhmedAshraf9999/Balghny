@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="balghny"
+        android:label="Bl3'ny - بلغني"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/balghny">
         <activity
             android:name=".MainActivity"
             android:exported="true"
