@@ -488,8 +488,7 @@ class _HomePageState extends State<HomePage> {
                                           //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
                                           Expanded(
                                             child: Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 0),
+
                                                 child: Center(
                                                   child: Text(
                                                     AppLocalizations.of(context)!
