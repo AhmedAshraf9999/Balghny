@@ -225,25 +225,25 @@ AwesomeNotifications().initialize(
                             ),
                             Container(
                               padding: EdgeInsets.all(5),
-                              child: Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                        AppLocalizations.of(context)!.address,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold)),
-                                            
-                                    Container(
-                                      margin: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "${post.Address}",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      AppLocalizations.of(context)!.address,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
+
+                                  Container(
+                                    margin: EdgeInsets.only(left: 5),
+                                    child: Text(
+                                      "${post.Address}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                               /*  Row(children: [
                                 Expanded(

@@ -12,7 +12,10 @@ import 'package:path_provider/path_provider.dart';
 
 
 class Cam_Fire extends StatefulWidget {
-  const Cam_Fire({Key? key}) : super(key: key);
+  String result1 = "";
+
+
+    Cam_Fire({Key? key,required this.result1}) : super(key: key);
 
   @override
   State<Cam_Fire> createState() => _Cam_FireState();
@@ -27,8 +30,8 @@ class _Cam_FireState extends State<Cam_Fire> {
 
   File? _image1;
   var image ;
- // String? _imagepath;
- // String i = "assets/images/my.jpg";
+  // String? _imagepath;
+  // String i = "assets/images/my.jpg";
   late ImagePicker imagePicker;
 
   //TODO declare detector
@@ -43,7 +46,7 @@ class _Cam_FireState extends State<Cam_Fire> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
-    
+
     //TODO initialize detector
     createObjectDetection();
   }
@@ -60,32 +63,32 @@ class _Cam_FireState extends State<Cam_Fire> {
 
 
   //TODO capture image using camera
- // late File _image1;
+  // late File _image1;
   final picker = ImagePicker();
   Future<void> getImage1() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera
-    ,   maxWidth: 640,
-       maxHeight: 480,
+        ,   maxWidth: 640,
+        maxHeight: 480,
         imageQuality: 80 //0 - 100
 
     );
 
     if (pickedFile != null) {
-      var imagename = basename(pickedFile.path) ;      
+      var imagename = basename(pickedFile.path) ;
       setState(() {
         _image1 = File(pickedFile.path);
         doObjectDetection();
       });
     }
     else {
-        print('No image selected.');
-      }
+      print('No image selected.');
+    }
 
 
 
   }
 
-  
+
 
 
   //TODO face detection code here
@@ -118,7 +121,7 @@ class _Cam_FireState extends State<Cam_Fire> {
   }
 
   doObjectDetection() async {
-     result = "";
+    result = "";
     final InputImage inputImage = InputImage.fromFile(_image1!);
     objects = await objectDetector.processImage(inputImage);
 
@@ -130,11 +133,21 @@ class _Cam_FireState extends State<Cam_Fire> {
     image = await _image1?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
+
+      for (DetectedObject rectangle in objects) {
+        // ...
+
+        for (Label label in rectangle.labels) {
+          result = label.text; // Assign the value to the result variable
+          print(result);
+          break;
+        }
+      }
       image;
       objects;
       result;
 
-      print(result);
+        print(result);
     });
   }
 
@@ -153,7 +166,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                 ? Container(
                 width: 640,
                 height: 480,
-              //  height: 300,
+                //  height: 300,
                 margin: const EdgeInsets.only(
                   top: 45,
                 ),
@@ -164,7 +177,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                   border: Border.all(width: 8, color: Colors.black),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: 
+                child:
                 Center(
                   child: FittedBox(
                     child: SizedBox(
@@ -202,7 +215,7 @@ class _Cam_FireState extends State<Cam_Fire> {
                   child: ElevatedButton(
                       onPressed: () {
                         getImage1();
-                       // uploadFile(_image1!);
+                        // uploadFile(_image1!);
                       },
                       child:  Text(AppLocalizations.of(context)!.capture_image,
                           style: TextStyle(fontSize: 18))),
@@ -212,41 +225,52 @@ class _Cam_FireState extends State<Cam_Fire> {
                   child: ElevatedButton(
                       onPressed: () {
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
-                          ),
-                        );
+                        print("the resulat is $result");
+                        if(_image1 != null){
+                          if( result   == "Fire-Disaster"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
+                              ),
+                            );
+                          }
+                          else if(result == "Fire-Disaster" && result == "Non Damage"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
+                              ),
+                            );
+                          }
 
+                          else{
 
-                    /* if(result == "Fire-Disaster"){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
-                            ),
-                          );
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Fake Image"),
+                              content: Text("This Image Not Damage."),
+                              actions: [
+
+                              ],
+                            );
+
+                            // show the dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
                         }
-                      else if(result == "Fire-Disaster" && result == "Non Damage"){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
-                            ),
-                          );
-                        }
-
-                        else{
-
+                        else {
                           AlertDialog alert = AlertDialog(
-                            title: Text("Fake Image"),
-                            content: Text("This Image Not Damage."),
+                            title: Text("No image"),
+                            content: Text("Not found image."),
                             actions: [
 
                             ],
                           );
-
                           // show the dialog
                           showDialog(
                             context: context,
@@ -254,11 +278,8 @@ class _Cam_FireState extends State<Cam_Fire> {
                               return alert;
                             },
                           );
-
-
-
-                        }*/
-                      /*  if(_image1 == null){
+                        }
+                        /*  if(_image1 == null){
                           AlertDialog alert = AlertDialog(
                             title: Text("NO Image"),
                             content: Text("You should pic Image."),
@@ -268,13 +289,13 @@ class _Cam_FireState extends State<Cam_Fire> {
                           );
                         } else{
                        }*/
-                        
+
 
                       },
                       child:  Text(AppLocalizations.of(context)!.send,
                           style: TextStyle(fontSize: 18))
-                          
-                          ),
+
+                  ),
                 ),
 
               ],
@@ -295,6 +316,8 @@ class ObjectPainter extends CustomPainter {
 
   ObjectPainter({required this.objectList, @required this.imageFile});
 
+
+
   @override
   void paint(Canvas canvas, Size size) {
     if (imageFile != null) {
@@ -309,6 +332,7 @@ class ObjectPainter extends CustomPainter {
       canvas.drawRect(rectangle.boundingBox, p);
       var list = rectangle.labels;
       for (Label label in list) {
+
         print("${label.text}   ${label.confidence.toStringAsFixed(2)}");
         TextSpan span = TextSpan(
             text: label.text,

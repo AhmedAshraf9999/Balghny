@@ -371,14 +371,19 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
                                           Container(
+
                                               margin:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .fire_disaster,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                  EdgeInsets.only(right: 0),
+                                              child: Center(
+                                                child: Text(
+
+                                                  AppLocalizations.of(context)!
+                                                      .fire_disaster,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -423,13 +428,17 @@ class _HomePageState extends State<HomePage> {
                                           //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
                                           Container(
                                               margin:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .water_disaster,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                  EdgeInsets.only(right: 0),
+                                              child: Center(
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .water_disaster,
+                                                  textAlign: TextAlign.center,
+
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -477,16 +486,21 @@ class _HomePageState extends State<HomePage> {
                                             height: 5,
                                           ),
                                           //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
-                                          Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .infrastructure_disaster,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
-                                              )),
+                                          Expanded(
+                                            child: Container(
+
+                                                child: Center(
+                                                  child: Text(
+                                                    AppLocalizations.of(context)!
+                                                        .infrastructure_disaster,
+                                                    textAlign: TextAlign.center,
+
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  ),
+                                                )),
+                                          ),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -530,13 +544,17 @@ class _HomePageState extends State<HomePage> {
                                           //   Image.asset("assets/images/r1.jpg",width: 150,height: 130,fit: BoxFit.fill,),
                                           Container(
                                               margin:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .car_accidents,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                  EdgeInsets.only(right: 0),
+                                              child: Center(
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .car_accidents,
+                                                  textAlign: TextAlign.center,
+
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -560,7 +578,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                       //margin: EdgeInsets.only(bottom: 20),
                                       // padding: EdgeInsets.all(5),
-                                      height: 220,
+                                      height: 200,
                                       width: 170,
                                       decoration: BoxDecoration(
                                           color: Colors.grey[200],
@@ -592,7 +610,7 @@ class _HomePageState extends State<HomePage> {
                                                     .new_category,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                    fontSize: 18),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -611,7 +629,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                       //margin: EdgeInsets.only(bottom: 20),
                                       // padding: EdgeInsets.all(5),
-                                      height: 220,
+                                      height: 200,
                                       width: 170,
                                       decoration: BoxDecoration(
                                           color: Colors.grey[200],
@@ -643,7 +661,7 @@ class _HomePageState extends State<HomePage> {
                                                     .new_category,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                    fontSize: 18),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -667,7 +685,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                       //margin: EdgeInsets.only(bottom: 20),
                                       // padding: EdgeInsets.all(5),
-                                      height: 220,
+                                      height: 200,
                                       width: 170,
                                       decoration: BoxDecoration(
                                           color: Colors.grey[200],
@@ -699,7 +717,7 @@ class _HomePageState extends State<HomePage> {
                                                     .new_category,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                    fontSize: 18),
                                               )),
                                           SizedBox(
                                             height: 5,
@@ -718,7 +736,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                       //margin: EdgeInsets.only(bottom: 20),
                                       // padding: EdgeInsets.all(5),
-                                      height: 220,
+                                      height: 200,
                                       width: 170,
                                       decoration: BoxDecoration(
                                           color: Colors.grey[200],
@@ -750,7 +768,7 @@ class _HomePageState extends State<HomePage> {
                                                     .new_category,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                                    fontSize: 18),
                                               )),
                                           SizedBox(
                                             height: 5,

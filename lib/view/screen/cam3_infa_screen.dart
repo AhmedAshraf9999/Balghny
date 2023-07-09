@@ -12,7 +12,8 @@ import 'package:path_provider/path_provider.dart';
 
 
 class Cam3 extends StatefulWidget {
-  const Cam3({Key? key}) : super(key: key);
+  String result1 = "";
+    Cam3({Key? key,required this.result1}) : super(key: key);
 
   @override
   State<Cam3> createState() => _Cam3State();
@@ -128,6 +129,15 @@ class _Cam3State extends State<Cam3> {
     image = await _image1?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
+      for (DetectedObject rectangle in objects) {
+        // ...
+
+        for (Label label in rectangle.labels) {
+          result = label.text; // Assign the value to the result variable
+          print(result);
+          break;
+        }
+      }
       image;
       objects;
       result;
@@ -207,26 +217,54 @@ class _Cam3State extends State<Cam3> {
                 SizedBox(width: 20,),
                 Expanded(
                   child: ElevatedButton(
+
                       onPressed: () {
-                        if(result == "Fire-Disaster" || result != "Non Damage"){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!,title: "Infrastructure Disaster"),
-                            ),
-                          );
+                        print("the resulat is $result");
+                        if(_image1 != null){
+                          if( result   == "Infrastructure"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Infrastructure"),
+                              ),
+                            );
+                          }
+                          else if(result == "Infrastructure" && result == "Non Damage"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Infrastructure"),
+                              ),
+                            );
+                          }
+
+                          else{
+
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Fake Image"),
+                              content: Text("This Image Not Damage."),
+                              actions: [
+
+                              ],
+                            );
+
+                            // show the dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
                         }
-
-                        else{
-
+                        else {
                           AlertDialog alert = AlertDialog(
-                            title: Text("Fake Image"),
-                            content: Text("This Image Not Damage."),
+                            title: Text("No image"),
+                            content: Text("Not found image."),
                             actions: [
 
                             ],
                           );
-
                           // show the dialog
                           showDialog(
                             context: context,
@@ -234,11 +272,7 @@ class _Cam3State extends State<Cam3> {
                               return alert;
                             },
                           );
-
-
-
                         }
-
 
                       },
                       child:  Text(AppLocalizations.of(context)!.send,

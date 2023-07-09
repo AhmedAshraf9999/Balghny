@@ -12,7 +12,8 @@ import 'package:path_provider/path_provider.dart';
 
 
 class Cam4 extends StatefulWidget {
-  const Cam4({Key? key}) : super(key: key);
+  String result1 = "";
+    Cam4({Key? key,required this.result1}) : super(key: key);
 
   @override
   State<Cam4> createState() => _Cam4State();
@@ -128,6 +129,15 @@ class _Cam4State extends State<Cam4> {
     image = await _image1?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
+      for (DetectedObject rectangle in objects) {
+        // ...
+
+        for (Label label in rectangle.labels) {
+          result = label.text; // Assign the value to the result variable
+          print(result);
+          break;
+        }
+      }
       image;
       objects;
       result;
@@ -208,25 +218,52 @@ class _Cam4State extends State<Cam4> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        if(result == "Fire-Disaster" || result != "Non Damage"){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!,title: "A Disaster"),
-                            ),
-                          );
+                        print("the resulat is $result");
+                        if(_image1 != null){
+                          if( result   == "Accident"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Accident"),
+                              ),
+                            );
+                          }
+                          else if(result == "Accident" && result == "Non Damage"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Accident"),
+                              ),
+                            );
+                          }
+
+                          else{
+
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Fake Image"),
+                              content: Text("This Image Not Damage."),
+                              actions: [
+
+                              ],
+                            );
+
+                            // show the dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
                         }
-
-                        else{
-
+                        else {
                           AlertDialog alert = AlertDialog(
-                            title: Text("Fake Image"),
-                            content: Text("This Image Not Damage."),
+                            title: Text("No image"),
+                            content: Text("Not found image."),
                             actions: [
 
                             ],
                           );
-
                           // show the dialog
                           showDialog(
                             context: context,
@@ -234,10 +271,8 @@ class _Cam4State extends State<Cam4> {
                               return alert;
                             },
                           );
-
-
-
                         }
+
 
 
                       },

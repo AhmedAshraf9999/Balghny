@@ -159,7 +159,7 @@ class ContactUs extends StatelessWidget {
                                 width: 10,
                               ),
                               Text(
-                                "hello@Bal3ny.com",
+                                "hello@Bal3'ny.com",
                                 style:
                                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                               ),

@@ -12,7 +12,8 @@ import 'package:path_provider/path_provider.dart';
 
 
 class Cam2 extends StatefulWidget {
-  const Cam2({Key? key}) : super(key: key);
+  String result1 = "";
+    Cam2({Key? key,required this.result1}) : super(key: key);
 
   @override
   State<Cam2> createState() => _Cam2State();
@@ -128,6 +129,15 @@ class _Cam2State extends State<Cam2> {
     image = await _image1?.readAsBytes();
     image = await decodeImageFromList(image);
     setState(() {
+      for (DetectedObject rectangle in objects) {
+        // ...
+
+        for (Label label in rectangle.labels) {
+          result = label.text; // Assign the value to the result variable
+          print(result);
+          break;
+        }
+      }
       image;
       objects;
       result;
@@ -208,11 +218,65 @@ class _Cam2State extends State<Cam2> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
+                        print("the resulat is $result");
+                        if(_image1 != null){
+                          if( result   == "Water_Damage"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Water_Damage"),
+                              ),
+                            );
+                          }
+                          else if(result == "Water_Damage" && result == "Non Damage"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Add_post(img: _image1!, title:"Water_Damage"),
+                              ),
+                            );
+                          }
+
+                          else{
+
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Fake Image"),
+                              content: Text("This Image Not Damage."),
+                              actions: [
+
+                              ],
+                            );
+
+                            // show the dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
+                        }
+                        else {
+                          AlertDialog alert = AlertDialog(
+                            title: Text("No image"),
+                            content: Text("Not found image."),
+                            actions: [
+
+                            ],
+                          );
+                          // show the dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            },
+                          );
+                        }
                     /*    if(result == "Fire-Disaster" || result != "Non Damage"){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Add_post(img: _image1!),
+                              builder: (context) => Add_post(img: _image1!, title:"Fire-Disaster"),
                             ),
                           );
                         }

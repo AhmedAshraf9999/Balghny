@@ -19,12 +19,11 @@ class _AccordionPageState extends State<AccordionPage> {
     },
     {
       'title': 'what is Benefits ?',
-      'description': 'This is the description for item 2.',
+      'description': 'The App can quickly detect disaster situations through photos or images captured by a camera, providing real-time monitoring and timely updates to the users and emergency services. This technology is cost-effective, easy to use, and can improve the accuracy of disaster detection, potentially saving lives and minimizing damage.',
     },
     {
-      'title': 'How do I use the app to take a picture and Benefits?',
-      'description': 'This is the description for item 3.',
-    },
+      'title': 'How do I use the app to take a picture ?',
+      'description': "1-Open the mobile app on your device and navigate to the section that allows you to take a picture of potential disasters.\n2-Once you take a picture, the app's machine learning algorithm will analyze the image to determine if it contains any signs of a disaster.\n3-If the algorithm detects a disaster, the app will display an alert message indicating the type of disaster .\n4-you can then post the picture to the app's community forum to alert others and help spread awareness of the disaster.\n5-The app may also prompt you to contact emergency services if necessary based on the severity of the disaster.",},
   ];
 
   @override
